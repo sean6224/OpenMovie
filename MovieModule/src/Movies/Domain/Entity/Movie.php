@@ -86,6 +86,17 @@ class Movie extends AggregateRoot
         );
     }
 
+    /**
+     * Updates the movie entity with the provided data.
+     *
+     * @param MovieName|null $movieName The new movie name, or null to keep the existing one.
+     * @param Description|null $description The new movie description, or null to keep the existing one.
+     * @param ReleaseYear|null $releaseYear The new release year, or null to keep the existing one.
+     * @param array|null $movieDetails The new movie details, or null to keep the existing ones.
+     * @param Duration|null $duration The new movie duration, or null to keep the existing one.
+     * @param AgeRestriction|null $ageRestriction The new age restriction, or null to keep the existing one.
+     * @return void
+     */
     public function update(
         ?MovieName $movieName = null,
         ?Description $description = null,
@@ -104,10 +115,6 @@ class Movie extends AggregateRoot
             $this->initializeCollections($movieDetails);
         }
     }
-
-
-
-
 
     /**
      * Initialize collections for movie details.
