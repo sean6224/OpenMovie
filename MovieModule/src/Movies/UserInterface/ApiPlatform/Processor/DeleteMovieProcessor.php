@@ -6,7 +6,6 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Common\Application\Command\CommandBus;
 use App\Movies\Application\UseCase\Command\DeleteMovie\DeleteMovieCommand;
-use App\Movies\UserInterface\ApiPlatform\Resource\MovieResource;
 
 /**
  * The DeleteMovieProcessor is responsible for processing the deletion of a movie resource from the system.
