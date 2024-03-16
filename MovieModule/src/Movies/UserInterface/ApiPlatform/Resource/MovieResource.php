@@ -7,11 +7,14 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Patch;
+
 use App\Movies\Application\DTO\MovieBasicDTO;
 use App\Movies\Application\DTO\MovieDetailsParameterDTO;
 use App\Movies\Application\DTO\MovieDTO;
 use App\Movies\UserInterface\ApiPlatform\Processor\CreateMovieProcessor;
 use App\Movies\UserInterface\ApiPlatform\Processor\DeleteMovieProcessor;
+use App\Movies\UserInterface\ApiPlatform\Processor\PatchMovieProcessor;
 use App\Movies\UserInterface\ApiPlatform\Provider\MoviesCollectionProvider;
 use App\Movies\UserInterface\ApiPlatform\Provider\SingleMovieProvider;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -42,11 +45,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
             provider: SingleMovieProvider::class,
         ),
         new Delete(
-            'movies/{id}',
+            uriTemplate: 'movies/{id}',
             openapiContext: ['summary' => 'Delete Movie.'],
             provider: SingleMovieProvider::class,
             processor: DeleteMovieProcessor::class,
         ),
+        new Patch(
+            uriTemplate: 'movies/{id}',
+            openapiContext: ['summary' => 'Update Movie.'],
+            provider: SingleMovieProvider::class,
+            processor: PatchMovieProcessor::class,
+        )
     ]
 )]
 
