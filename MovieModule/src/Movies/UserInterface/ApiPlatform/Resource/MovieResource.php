@@ -6,10 +6,12 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
 use App\Movies\Application\DTO\MovieBasicDTO;
 use App\Movies\Application\DTO\MovieDetailsParameterDTO;
 use App\Movies\Application\DTO\MovieDTO;
 use App\Movies\UserInterface\ApiPlatform\Processor\CreateMovieProcessor;
+use App\Movies\UserInterface\ApiPlatform\Processor\DeleteMovieProcessor;
 use App\Movies\UserInterface\ApiPlatform\Provider\MoviesCollectionProvider;
 use App\Movies\UserInterface\ApiPlatform\Provider\SingleMovieProvider;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -23,22 +25,28 @@ use Symfony\Component\Serializer\Annotation\Groups;
     shortName: 'MovieResource',
     operations: [
         new Post(
-            uriTemplate: '/movies/add',
+            uriTemplate: 'movies/add',
             openapiContext: ['summary' => 'Create movies'],
             denormalizationContext: ['groups' => ['create']],
             validationContext: ['groups' => ['create']],
             processor: CreateMovieProcessor::class,
         ),
         new GetCollection(
-            uriTemplate: '/movies/get',
+            uriTemplate: 'movies/get',
             openapiContext: ['summary' => 'List all movies.'],
             provider: MoviesCollectionProvider::class,
         ),
         new Get(
-            uriTemplate: '/movies/{id}',
+            uriTemplate: 'movies/{id}',
             openapiContext: ['summary' => 'Get movie'],
             provider: SingleMovieProvider::class,
-        )
+        ),
+        new Delete(
+            'movies/{id}',
+            openapiContext: ['summary' => 'Delete Movie.'],
+            provider: SingleMovieProvider::class,
+            processor: DeleteMovieProcessor::class,
+        ),
     ]
 )]
 
