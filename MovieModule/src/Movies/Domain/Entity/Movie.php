@@ -53,12 +53,6 @@ class Movie extends AggregateRoot
         $this->description = $description;
         $this->releaseYear = $releaseYear;
 
-        $this->productionCountries = new ArrayCollection();
-        $this->directors = new ArrayCollection();
-        $this->actors = new ArrayCollection();
-        $this->category = new ArrayCollection();
-        $this->language = new ArrayCollection();
-        $this->subtitles = new ArrayCollection();
         $this->initializeCollections($movieDetails);
         $this->duration = $duration;
         $this->ageRestriction = $ageRestriction;
@@ -92,6 +86,29 @@ class Movie extends AggregateRoot
         );
     }
 
+    public function update(
+        ?MovieName $movieName = null,
+        ?Description $description = null,
+        ?ReleaseYear $releaseYear = null,
+        ?array $movieDetails = null,
+        ?Duration $duration = null,
+        ?AgeRestriction $ageRestriction = null
+    ): void {
+        $this->movieName = $movieName ?? $this->movieName;
+        $this->description = $description ?? $this->description;
+        $this->releaseYear = $releaseYear ?? $this->releaseYear;
+        $this->duration = $duration ?? $this->duration;
+        $this->ageRestriction = $ageRestriction ?? $this->ageRestriction;
+
+        if ($movieDetails !== null) {
+            $this->initializeCollections($movieDetails);
+        }
+    }
+
+
+
+
+
     /**
      * Initialize collections for movie details.
      *
@@ -103,6 +120,13 @@ class Movie extends AggregateRoot
      */
     private function initializeCollections(array $movieDetails): void
     {
+        $this->productionCountries = new ArrayCollection();
+        $this->directors = new ArrayCollection();
+        $this->actors = new ArrayCollection();
+        $this->category = new ArrayCollection();
+        $this->language = new ArrayCollection();
+        $this->subtitles = new ArrayCollection();
+
         $collectionMappings = [
             'productionCountry' => ProductionCountry::class,
             'directors' => Directors::class,
