@@ -40,7 +40,7 @@ final class CreateMovieCommand implements Command
     public function toDto(): MovieDTO
     {
         return new MovieDTO(
-            id: uuid_create(),
+            id: '',
             movieBasic: new MovieBasicDTO(
                 movieName: $this->movieName,
                 description: $this->description,
