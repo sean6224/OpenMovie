@@ -1,0 +1,42 @@
+doctrine:
+    dbal:
+        dbname: '%env(resolve:DATABASE_NAME)%'
+        host: '%env(resolve:DATABASE_HOST)%'
+        port: '%env(resolve:DATABASE_PORT)%'
+        user: '%env(resolve:DATABASE_USER)%'
+        password: '%env(resolve:DATABASE_PASSWORD)%'
+        driver: '%env(resolve:DATABASE_DRIVER)%'
+        server_version: '%env(resolve:DATABASE_SERVER_VERSION)%'
+
+        types:
+            # Common
+            datetime: App\Common\Infrastructure\Doctrine\Type\DateTimeType
+            email: App\Common\Infrastructure\Doctrine\Type\EmailType
+            id: App\Common\Infrastructure\Doctrine\Type\IdType
+            user_id: App\Common\Infrastructure\Doctrine\Type\UserIdType
+            array_object: App\Common\Infrastructure\Doctrine\Type\ArrayObjectType
+            
+            # Module Movies
+            movie_name: App\Movies\Infrastructure\Doctrine\Type\MovieNameType
+            description: App\Movies\Infrastructure\Doctrine\Type\DescriptionType
+            releaseYear: App\Movies\Infrastructure\Doctrine\Type\ReleaseYearType
+            duration: App\Movies\Infrastructure\Doctrine\Type\DurationType
+            ageRestriction: App\Movies\Infrastructure\Doctrine\Type\AgeRestrictionType
+    
+            productionCountry: App\Movies\Infrastructure\Doctrine\Type\ProductionCountryType
+            movieDirectors: App\Movies\Infrastructure\Doctrine\Type\DirectorType
+            actor: App\Movies\Infrastructure\Doctrine\Type\ActorType
+            category: App\Movies\Infrastructure\Doctrine\Type\CategoryType
+            language: App\Movies\Infrastructure\Doctrine\Type\LanguageType
+            subtitles: App\Movies\Infrastructure\Doctrine\Type\SubtitlesType
+            
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            Movies:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Movies/Infrastructure/Doctrine/Mapping'
+                prefix: 'App\Movies\Domain\Entity'

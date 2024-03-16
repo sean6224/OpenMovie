@@ -1,0 +1,17 @@
+api_platform:
+    show_webby: true
+    enable_swagger_ui: true
+    enable_re_doc: true
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Movies/UserInterface/ApiPlatform/Resource/'
+    patch_formats:
+        json:
+            - 'application/merge-patch+json'
+    swagger:
+        versions: [3]
+        # Usunięto klucz JWT
+    exception_to_status:
+        \App\Common\Domain\Exception\ValidationFailed: 400
+        \App\Common\Domain\Exception\LogicFailed: 400
+        \App\Common\Domain\Exception\ResourceNotFound: 404
