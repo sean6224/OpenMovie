@@ -3,17 +3,16 @@ declare(strict_types=1);
 namespace App\Movies\UserInterface\ApiPlatform\Resource;
 
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 use App\Movies\Application\DTO\MovieBasicDTO;
 use App\Movies\Application\DTO\MovieDetailsParameterDTO;
+use App\Movies\Application\DTO\MovieDTO;
 use App\Movies\UserInterface\ApiPlatform\Processor\CreateMovieProcessor;
 use App\Movies\UserInterface\ApiPlatform\Provider\MoviesCollectionProvider;
 use App\Movies\UserInterface\ApiPlatform\Provider\SingleMovieProvider;
-use App\Movies\UserInterface\ApiPlatform\Resource\Parameters\MovieInformation;
 use Symfony\Component\Serializer\Annotation\Groups;
-use App\Movies\Application\DTO\MovieDTO;
 
 /**
  * Represents a resource for movies.
