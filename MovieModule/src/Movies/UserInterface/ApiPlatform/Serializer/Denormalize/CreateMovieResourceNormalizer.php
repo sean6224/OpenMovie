@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\Movies\UserInterface\ApiPlatform\Serializer\Denormalize;
 
-use App\Movies\UserInterface\ApiPlatform\Resource\Parameters\MovieInformation;
+use App\Movies\Application\DTO\MovieBasicDTO;
+use App\Movies\Application\DTO\MovieDetailsParameterDTO;
+use App\Movies\UserInterface\ApiPlatform\Resource\MovieInformation;
 use App\Movies\UserInterface\ApiPlatform\Resource\MovieResource;
 use InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use App\Movies\Application\DTO\MovieBasicDTO;
-use App\Movies\Application\DTO\MovieDetailsParameterDTO;
 
 /**
  * Class CreateMovieResourceNormalizer
