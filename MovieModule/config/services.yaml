@@ -4,20 +4,15 @@ services:
         autoconfigure: true
 
     _instanceof:
-        ######
         # Movies
-        ################################
         App\Movies\UserInterface\ApiPlatform\Serializer\Normalizer\MovieResourceNormalizer:
             tags:
                 - { name: serializer.normalizer, priority: 256 }
-                
+        
         App\Movies\UserInterface\ApiPlatform\Serializer\Denormalize\CreateMovieResourceNormalizer:
             tags: [ serializer.normalizer ]
-        
-        ######
-        # Messenger handlers
-        ################################
 
+        # Messenger handlers
         App\Common\Application\Query\QueryHandler:
             tags:
                 - { name: 'messenger.message_handler', bus: 'query.bus' }
@@ -26,18 +21,19 @@ services:
             tags:
                 - { name: 'messenger.message_handler', bus: 'command.bus' }
 
-    ######
     # Common
-    ################################
-
     App\Common\:
         resource: '%kernel.project_dir%/src/Common/'
         exclude:
             - '%kernel.project_dir%/src/Common/Infrastructure/Symfony/Kernel.php'
 
-    ######
     # Movies
-    ################################
-
     App\Movies\:
         resource: '%kernel.project_dir%/src/Movies/'
+
+    App\Movies\Domain\Repository\MovieRepository:
+        alias: App\Movies\Infrastructure\Doctrine\Repository\DoctrineMovieRepository
+
+    # InMemory
+    # App\Movies\Domain\Repository\MovieRepository:
+    #     alias: App\Movies\Infrastructure\InMemory\InMemoryMovieRepository
