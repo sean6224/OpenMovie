@@ -30,6 +30,10 @@ services:
     # Movies
     App\Movies\:
         resource: '%kernel.project_dir%/src/Movies/'
+    
+    # Ratings
+    App\Ratings\:
+        resource: '%kernel.project_dir%/src/Ratings/'
 
     # Doctrine
     App\Movies\Domain\Repository\MovieRepository:
