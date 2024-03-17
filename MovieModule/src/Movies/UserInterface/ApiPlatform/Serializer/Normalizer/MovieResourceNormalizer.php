@@ -23,7 +23,6 @@ class MovieResourceNormalizer implements NormalizerInterface
         // Extracting basic movie information and details parameters
         $movieBasic = $object->movieBasic;
         $movieDetailsParameters = $object->movieDetailsParameters;
-
         $propertiesToNormalize = [
             'id' => $object->id,
             'movieName' => $movieBasic->movieName,
@@ -31,6 +30,7 @@ class MovieResourceNormalizer implements NormalizerInterface
             'releaseYear' => $movieBasic->releaseYear,
             'duration' => $movieBasic->duration,
             'ageRestriction' => $movieBasic->ageRestriction,
+            'averageRating' => (float)$movieBasic->averageRating,
         ];
 
         // Normalizing collection properties from movie details parameters
