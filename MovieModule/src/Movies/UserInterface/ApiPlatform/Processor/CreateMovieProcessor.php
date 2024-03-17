@@ -47,7 +47,8 @@ final readonly class CreateMovieProcessor implements ProcessorInterface
             releaseYear: $movieBasic->releaseYear,
             movieData: $data->movieDetailsParameters,
             duration: $movieBasic->duration,
-            ageRestriction: $movieBasic->ageRestriction
+            ageRestriction: $movieBasic->ageRestriction,
+            averageRating: $movieBasic->averageRating
         );
         return MovieResource::fromMovieDTO(
             $this->commandBus->dispatch($movieDTO)
