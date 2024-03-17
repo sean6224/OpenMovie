@@ -11,12 +11,14 @@ final readonly class RatingDTO
      * Constructs a new RatingDTO instance.
      *
      * @param string $id The id of Rating.
-     * @param string $movieId The uuid of movie.
+     * @param string $movieId The uuid movie of movie.
+     * @param string $userId The uuid user.
      * @param float $averageRating User evaluation
      */
     public function __construct(
         public string $id,
         public string $movieId,
+        public string $userId,
         public float $averageRating
     ) {
     }
