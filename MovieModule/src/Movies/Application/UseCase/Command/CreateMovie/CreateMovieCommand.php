@@ -21,6 +21,7 @@ final class CreateMovieCommand implements Command
      * @param MovieDetailsParameterDTO $movieData The details parameters of the movie.
      * @param int $duration The duration of the movie.
      * @param int $ageRestriction The age restriction of the movie.
+     * @param float $averageRating The average rating of the movie.
      */
     public function __construct(
         public string $movieName,
@@ -28,7 +29,8 @@ final class CreateMovieCommand implements Command
         public string $releaseYear,
         public MovieDetailsParameterDTO $movieData,
         public int $duration,
-        public int $ageRestriction
+        public int $ageRestriction,
+        public float $averageRating
     ) {
     }
 
@@ -46,7 +48,8 @@ final class CreateMovieCommand implements Command
                 description: $this->description,
                 releaseYear: $this->releaseYear,
                 duration: $this->duration,
-                ageRestriction: $this->ageRestriction
+                ageRestriction: $this->ageRestriction,
+                averageRating: $this->averageRating
             ),
 
             movieDetailsParameters: new MovieDetailsParameterDTO(
