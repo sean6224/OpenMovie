@@ -86,4 +86,10 @@ class MovieInformation
      * @Groups({"read", "create"})
      */
     public int $ageRestriction = 0;
+
+    /**
+     * @var float The average rating for the movie.
+     * @Groups({"read", "create"})
+     */
+    public float $averageRating = 0.0;
 }
