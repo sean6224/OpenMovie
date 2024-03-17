@@ -43,8 +43,6 @@ final readonly class DeleteMovie
             $this->entityManager->commit();
         } catch (Exception $exception) {
             $this->entityManager->rollback();
-            echo 'Caught exception: ', $exception->getMessage(), "\n";
-            echo 'Exception trace: ', $exception->getTraceAsString(), "\n";
             throw new MovieCannotBeDeletedException($movieId);
         }
     }
