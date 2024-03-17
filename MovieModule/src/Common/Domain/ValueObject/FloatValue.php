@@ -6,7 +6,7 @@ abstract class FloatValue
 {
     protected float $value;
 
-    private function __construct(float $value)
+    protected function __construct(float $value)
     {
         $this->value = $value;
     }
