@@ -11,6 +11,7 @@ use App\Movies\Domain\ValueObject\Description;
 use App\Movies\Domain\ValueObject\ReleaseYear;
 use App\Movies\Domain\ValueObject\Duration;
 use App\Movies\Domain\ValueObject\AgeRestriction;
+use App\Movies\Domain\ValueObject\AverageRating;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,6 +23,7 @@ class Movie extends AggregateRoot
     private ReleaseYear $releaseYear;
     private Duration $duration;
     private AgeRestriction $ageRestriction;
+    private AverageRating $averageRating;
 
     /** @var Collection<int, ProductionCountry> */
     private Collection $productionCountries;
@@ -44,6 +46,7 @@ class Movie extends AggregateRoot
         array $movieDetails,
         Duration $duration,
         AgeRestriction $ageRestriction,
+        AverageRating $averageRating
     ) {
 
         $this->id = Id::generate();
@@ -56,6 +59,7 @@ class Movie extends AggregateRoot
         $this->initializeCollections($movieDetails);
         $this->duration = $duration;
         $this->ageRestriction = $ageRestriction;
+        $this->averageRating = $averageRating;
     }
 
     /**
@@ -75,6 +79,7 @@ class Movie extends AggregateRoot
         array $movieDetails,
         Duration $duration,
         AgeRestriction $ageRestriction,
+        AverageRating $averageRating,
     ): self {
         return new self(
             movieName: $movieName,
@@ -82,7 +87,8 @@ class Movie extends AggregateRoot
             releaseYear: $releaseYear,
             movieDetails: $movieDetails,
             duration: $duration,
-            ageRestriction: $ageRestriction
+            ageRestriction: $ageRestriction,
+            averageRating: $averageRating
         );
     }
 
@@ -354,6 +360,16 @@ class Movie extends AggregateRoot
     public function getAgeRestriction(): AgeRestriction
     {
         return $this->ageRestriction;
+    }
+
+    /**
+     * Retrieve the average rating for a movie.
+     *
+     * @return AverageRating The average rating of movie.
+     */
+    public function getAverageRating(): AverageRating
+    {
+        return $this->averageRating;
     }
 
     /**
