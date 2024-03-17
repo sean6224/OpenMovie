@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\Ratings\Domain\ValueObject;
 
 use App\Common\Domain\ValueObject\FloatValue;
-use App\Movies\Domain\Exception\AverageRatingInvalid;
+use App\Ratings\Domain\Exception\AverageRatingInvalid;
 
 final class AverageRating extends FloatValue
 {
