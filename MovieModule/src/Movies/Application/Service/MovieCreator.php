@@ -6,6 +6,7 @@ use App\Movies\Domain\Repository\MovieRepository;
 use App\Movies\Domain\Entity\Movie;
 use App\Movies\Application\DTO\MovieDTO;
 
+use App\Movies\Domain\ValueObject\AverageRating;
 use App\Movies\Domain\ValueObject\MovieName;
 use App\Movies\Domain\ValueObject\Description;
 use App\Movies\Domain\ValueObject\ReleaseYear;
@@ -42,7 +43,7 @@ final readonly class MovieCreator
     ): Movie
     {
         $movieDTO = $movieDto->movieBasic;
-        $this->ensureMovieNotExist(MovieName::fromString($movieDto->movieBasic->movieName));
+        $this->ensureMovieNotExist(MovieName::fromString($movieDTO->movieName));
 
         $movie = Movie::create(
             MovieName::fromString($movieDTO->movieName),
@@ -50,9 +51,10 @@ final readonly class MovieCreator
             ReleaseYear::fromString($movieDTO->releaseYear),
             $movieDto->movieDetailsParameters->toArray(),
             Duration::fromInt($movieDTO->duration),
-            AgeRestriction::fromInt($movieDTO->ageRestriction)
+            AgeRestriction::fromInt($movieDTO->ageRestriction),
+            AverageRating::fromFloat($movieDTO->averageRating),
         );
-        $this->movieRepository->add($movie);
+        //$this->movieRepository->add($movie);
         return $movie;
     }
 
