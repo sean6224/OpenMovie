@@ -15,13 +15,15 @@ final readonly class MovieBasicDTO
      * @param string $releaseYear The release year of the movie.
      * @param int $duration The duration of the movie in minutes.
      * @param int $ageRestriction The age restriction for the movie.
+     * @param float $averageRating The average rating for the movie.
      */
     public function __construct(
         public string $movieName,
         public string $description,
         public string $releaseYear,
         public int $duration,
-        public int $ageRestriction
+        public int $ageRestriction,
+        public float $averageRating
     ) {
     }
 }
