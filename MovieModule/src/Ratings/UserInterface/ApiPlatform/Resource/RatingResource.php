@@ -5,7 +5,7 @@ namespace App\Ratings\UserInterface\ApiPlatform\Resource;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\Ratings\Application\DTO\RatingDTO;
-use App\Ratings\UserInterface\ApiPlatform\Processor\CreateRatingsProcessor;
+use App\Ratings\UserInterface\ApiPlatform\Processor\CreateRatingProcessor;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             openapiContext: ['summary' => 'Adds a new rating for movie'],
             denormalizationContext: ['groups' => ['send']],
             validationContext: ['groups' => ['read', 'send']],
-            processor: CreateRatingsProcessor::class,
+            processor: CreateRatingProcessor::class,
         ),
     ]
 )]
@@ -55,7 +55,7 @@ class RatingResource
      * @param RatingDTO $ratingDTO The RatingDTO instance containing data for constructing RatingResource.
      * @return self new RatingResource instance constructed from RatingDTO data.
      */
-    public static function fromRatingsDTO(RatingDTO $ratingDTO): self
+    public static function fromRatingDTO(RatingDTO $ratingDTO): self
     {
         return new self(
             id: $ratingDTO->id,
