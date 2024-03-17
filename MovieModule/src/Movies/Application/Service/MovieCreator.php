@@ -54,7 +54,7 @@ final readonly class MovieCreator
             AgeRestriction::fromInt($movieDTO->ageRestriction),
             AverageRating::fromFloat($movieDTO->averageRating),
         );
-        //$this->movieRepository->add($movie);
+        $this->movieRepository->add($movie);
         return $movie;
     }
 
