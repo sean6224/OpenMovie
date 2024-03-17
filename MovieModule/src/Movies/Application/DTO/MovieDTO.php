@@ -38,6 +38,7 @@ final readonly class MovieDTO
             releaseYear: (string)$movie->getReleaseYear(),
             duration: $movie->getDuration()->value(),
             ageRestriction: $movie->getAgeRestriction()->value(),
+            averageRating: $movie->getAverageRating()->value(),
         );
 
         return new self(
