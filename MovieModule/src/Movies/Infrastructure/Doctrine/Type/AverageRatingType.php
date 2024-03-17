@@ -2,14 +2,14 @@
 declare(strict_types=1);
 namespace App\Movies\Infrastructure\Doctrine\Type;
 
-use App\Common\Infrastructure\Doctrine\Type\IntType;
+use App\Common\Infrastructure\Doctrine\Type\FloatType;
 use App\Movies\Domain\ValueObject\AverageRating;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 /**
- * Custom Doctrine type for mapping AverageRating  value objects to database columns.
+ * Custom Doctrine type for mapping AverageRating value objects to database columns.
  */
-class AverageRatingType extends IntType
+class AverageRatingType extends FloatType
 {
     public const TYPE = 'averageRating';
 
@@ -22,6 +22,7 @@ class AverageRatingType extends IntType
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): AverageRating
     {
-        return AverageRating::fromFloat($value);
+        $floatValue = (float) $value;
+        return AverageRating::fromFloat($floatValue);
     }
 }
