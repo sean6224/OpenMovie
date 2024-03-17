@@ -24,42 +24,38 @@ class Rating extends AggregateRoot
     /**
      * Constructs new Rating instance.
      *
-     * @param DateTime $createdAt The date and time when the rating was created.
      * @param MovieId $movieId The ID of the movie associated with the rating.
      * @param UserId $userId The ID of the user who rated the movie.
      * @param AverageRating $averageRating The average rating given to the movie.
      */
     private function __construct(
-        DateTime $createdAt,
         MovieId $movieId,
         UserId $userId,
         AverageRating $averageRating
     )
     {
         $this->id = Id::generate();
+        $this->createdAt = DateTime::now();
+
         $this->movieId = $movieId;
         $this->userId = $userId;
         $this->averageRating = $averageRating;
-        $this->createdAt = $createdAt;
     }
 
     /**
      * Factory method for creating new Rating instance.
      *
-     * @param DateTime $createdAt The date and time when the rating was created.
      * @param MovieId $movieId The ID of the movie associated with the rating.
      * @param UserId $userId The ID of the user who rated the movie.
      * @param AverageRating $averageRating The average rating given to the movie.
      * @return Rating A new instance of the Rating entity.
      */
     public static function create(
-        DateTime $createdAt,
         MovieId $movieId,
         UserId $userId,
         AverageRating $averageRating
     ): self {
         return new self(
-            createdAt: $createdAt,
             movieId: $movieId,
             userId: $userId,
             averageRating: $averageRating
