@@ -22,6 +22,7 @@ doctrine:
             releaseYear: App\Movies\Infrastructure\Doctrine\Type\ReleaseYearType
             duration: App\Movies\Infrastructure\Doctrine\Type\DurationType
             ageRestriction: App\Movies\Infrastructure\Doctrine\Type\AgeRestrictionType
+            averageRating: App\Movies\Infrastructure\Doctrine\Type\AverageRatingType
     
             productionCountry: App\Movies\Infrastructure\Doctrine\Type\ProductionCountryType
             movieDirectors: App\Movies\Infrastructure\Doctrine\Type\DirectorType
