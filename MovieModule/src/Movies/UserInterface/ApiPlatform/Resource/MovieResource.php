@@ -100,6 +100,7 @@ class MovieResource
             releaseYear: $movieBasic->releaseYear,
             duration: $movieBasic->duration,
             ageRestriction: $movieBasic->ageRestriction,
+            averageRating: $movieBasic->averageRating,
         );
 
         $movieDetails = new MovieDetailsParameterDTO(
