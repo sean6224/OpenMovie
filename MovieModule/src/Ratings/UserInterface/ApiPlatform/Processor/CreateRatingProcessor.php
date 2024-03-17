@@ -37,7 +37,6 @@ final readonly class CreateRatingProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): RatingResource
     {
-        print_r($data);
         $ratingDTO = new CreateRatingCommand(
             movieId: $data->movieId,
             userId: $data->userId,
