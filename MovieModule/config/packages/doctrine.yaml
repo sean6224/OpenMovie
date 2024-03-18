@@ -31,7 +31,7 @@ doctrine:
             subtitles: App\Movies\Infrastructure\Doctrine\Type\SubtitlesType
             
             # Module Movies -> Ratings
-            movie_id: App\Movies\Infrastructure\Doctrine\Type\MovieIdType
+            movie_id: App\Ratings\Infrastructure\Doctrine\Type\MovieIdType
             
     orm:
         auto_generate_proxy_classes: true
