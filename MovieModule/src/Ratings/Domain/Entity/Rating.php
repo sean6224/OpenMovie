@@ -62,6 +62,17 @@ class Rating extends AggregateRoot
     }
 
     /**
+     * Updates rating entity with new average rating for movie.
+     *
+     * @param AverageRating $averageRating The new average rating to be updated.
+     */
+    public function update(
+        AverageRating $averageRating,
+    ): void {
+        $this->averageRating = $averageRating;
+    }
+
+    /**
      * Gets the ID of rating.
      *
      * @return Id The ID of rating.
