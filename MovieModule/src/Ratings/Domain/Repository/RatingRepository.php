@@ -4,6 +4,7 @@ namespace App\Ratings\Domain\Repository;
 
 use App\Ratings\Domain\Entity\Rating;
 use App\Common\Domain\ValueObject\Id;
+use App\Common\Domain\ValueObject\UserId;
 use App\Ratings\Domain\Exception\RatingNotFound;
 use App\Common\Domain\Repository\Repository;
 
@@ -41,4 +42,12 @@ interface RatingRepository extends Repository
      * @throws RatingNotFound If the rating with the specified ID is not found.
      */
     public function get(Id $id): Rating;
+
+    /**
+     * Finds rating by user ID.
+     *
+     * @param UserId $userId The user ID.
+     * @return Rating|null The rating entity, or null if not found.
+     */
+    public function findByUserId(UserId $userId): ?Rating;
 }
