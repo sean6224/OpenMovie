@@ -44,7 +44,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new Patch(
             uriTemplate: '/movie/ratings/{id}',
             openapiContext: ['summary' => 'Update rating for movie.'],
-            denormalizationContext: ['groups' => ['send']],
+            denormalizationContext: ['groups' => ['patch']],
             provider: SingleRatingProvider::class,
             processor: PatchRatingProcessor::class,
         )
@@ -69,7 +69,7 @@ class RatingResource
         #[Groups(groups: ['send'])]
         public ?string $userId = null,
 
-        #[Groups(groups: ['send'])]
+        #[Groups(groups: ['send', 'patch'])]
         public float $averageRating = 0.0
     ) {
     }
