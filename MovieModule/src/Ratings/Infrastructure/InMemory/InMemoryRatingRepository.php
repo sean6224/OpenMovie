@@ -73,4 +73,20 @@ final class InMemoryRatingRepository extends InMemoryRepository implements Ratin
         }
         return null;
     }
+
+    /**
+     * Searches for rating based on pagination, sorting, and filtering criteria.
+     *
+     * @param int $page The page number of the search results.
+     * @param int $perPage The number of items per page.
+     * @param string $sortBy The field to sort the results by.
+     * @param string $sortOrder The sorting order ('asc' or 'desc').
+     * @return array An array of Rating entities matching search criteria.
+     */
+    public function search(int $page, int $perPage, string $sortBy, string $sortOrder): array
+    {
+        // Implementation of search functionality goes here
+        // This method is not implemented in the code snippet
+        return [];
+    }
 }
