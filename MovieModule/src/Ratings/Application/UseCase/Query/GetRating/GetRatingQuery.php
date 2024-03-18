@@ -17,9 +17,7 @@ final class GetRatingQuery implements Query
      * @param string $ratingId The unique identifier (ID) of movie rating.
      */
     public function __construct(
-        string $ratingId
+        public string $ratingId
     ) {
     }
 }
-
-
