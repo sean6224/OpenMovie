@@ -37,7 +37,7 @@ final readonly class RatingDTO
             id: (string) $rating->id(),
             movieId: (string) $rating->movieId(),
             userId: (string) $rating->userId(),
-            averageRating: (float) $rating->averageRating(),
+            averageRating: $rating->averageRating()->value(),
         );
     }
 }
