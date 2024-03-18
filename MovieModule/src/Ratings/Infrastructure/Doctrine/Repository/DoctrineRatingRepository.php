@@ -13,7 +13,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Repository implementation using Doctrine ORM for managing Movie entities.
+ * Repository implementation using Doctrine ORM for managing Rating entities.
  */
 class DoctrineRatingRepository extends ServiceEntityRepository implements RatingRepository
 {
