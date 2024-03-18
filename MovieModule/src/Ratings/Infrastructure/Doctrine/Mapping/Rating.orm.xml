@@ -7,7 +7,7 @@
         <id name="id" type="id" column="id" />
         <field name="movieId" type="movie_id" column="movieId"/>
         <field name="userId" type="user_id" column="userId"/>
-        <field name="averageRating" type="averageRating" column="averageRating"/>
+        <field name="averageRating" type="average_Rating" column="averageRating"/>
         <field name="createdAt" type="datetime" column="created_at"/>
         <!-- Indexes -->
         <indexes>
