@@ -11,6 +11,10 @@ services:
         
         App\Movies\UserInterface\ApiPlatform\Serializer\Denormalize\CreateMovieResourceNormalizer:
             tags: [ serializer.normalizer ]
+        # Ratings
+        App\Ratings\UserInterface\ApiPlatform\Serializer\Normalizer\RatingResourceNormalizer:
+            tags:
+                - { name: serializer.normalizer, priority: 256 }
 
         # Messenger handlers
         App\Common\Application\Query\QueryHandler:
