@@ -6,9 +6,11 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
 
 use App\Ratings\Application\DTO\RatingDTO;
 use App\Ratings\UserInterface\ApiPlatform\Processor\CreateRatingProcessor;
+use App\Ratings\UserInterface\ApiPlatform\Processor\PatchRatingProcessor;
 use App\Ratings\UserInterface\ApiPlatform\Provider\RatingCollectionProvider;
 use App\Ratings\UserInterface\ApiPlatform\Provider\SingleRatingProvider;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -38,6 +40,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
             openapiContext: ['summary' => 'List single rating.'],
             provider: SingleRatingProvider::class,
         ),
+        new Patch(
+            uriTemplate: '/movie/ratings/{id}',
+            openapiContext: ['summary' => 'Update rating for movie.'],
+            denormalizationContext: ['groups' => ['send']],
+            provider: SingleRatingProvider::class,
+            processor: PatchRatingProcessor::class,
+        )
     ]
 )]
 
