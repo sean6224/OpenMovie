@@ -29,30 +29,30 @@ use Symfony\Component\Serializer\Annotation\Groups;
     operations: [
         new Post(
             uriTemplate: 'movies/add',
-            openapiContext: ['summary' => 'Create movies'],
+            openapiContext: ['summary' => 'Initializes creation of new movie entry'],
             denormalizationContext: ['groups' => ['create']],
             validationContext: ['groups' => ['create']],
             processor: CreateMovieProcessor::class,
         ),
         new GetCollection(
-            uriTemplate: 'movies/get',
-            openapiContext: ['summary' => 'List all movies.'],
+            uriTemplate: 'movies/get/all_list',
+            openapiContext: ['summary' => 'Retrieves comprehensive list of all movies available on platform.'],
             provider: MoviesCollectionProvider::class,
         ),
         new Get(
-            uriTemplate: 'movies/{id}',
-            openapiContext: ['summary' => 'Get movie'],
+            uriTemplate: 'movies/single/{id}',
+            openapiContext: ['summary' => 'Fetches detailed information about specific movie identified by uuid'],
             provider: SingleMovieProvider::class,
         ),
         new Delete(
             uriTemplate: 'movies/{id}',
-            openapiContext: ['summary' => 'Delete Movie.'],
+            openapiContext: ['summary' => 'Removes movie from platform database'],
             provider: SingleMovieProvider::class,
             processor: DeleteMovieProcessor::class,
         ),
         new Patch(
             uriTemplate: 'movies/{id}',
-            openapiContext: ['summary' => 'Update Movie.'],
+            openapiContext: ['summary' => 'Allows modification of an existing movie entry, enabling updates or adjustments to movie details such as title, etc'],
             provider: SingleMovieProvider::class,
             processor: PatchMovieProcessor::class,
         )
