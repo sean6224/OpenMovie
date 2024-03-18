@@ -34,7 +34,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             provider: RatingCollectionProvider::class,
         ),
         new Get(
-            uriTemplate: '/movie/ratings/get/single',
+            uriTemplate: '/movie/ratings/get/single/{id}',
             openapiContext: ['summary' => 'List single rating.'],
             provider: SingleRatingProvider::class,
         ),
