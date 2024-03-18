@@ -40,6 +40,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             openapiContext: ['summary' => 'List single rating.'],
             provider: SingleRatingProvider::class,
         ),
+
         new Patch(
             uriTemplate: '/movie/ratings/{id}',
             openapiContext: ['summary' => 'Update rating for movie.'],
