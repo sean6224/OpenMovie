@@ -52,4 +52,16 @@ interface RatingRepository extends Repository
      * @return Rating|null The rating entity, or null if not found.
      */
     public function findByUserId(MovieId $movieId, UserId $userId): ?Rating;
+
+    /**
+     * Searches for movies based on pagination, sorting, and filtering criteria.
+     *
+     * @param int $page The page number of the search results.
+     * @param int $perPage The number of items per page.
+     * @param string $sortBy The field to sort the results by.
+     * @param string $sortOrder The sorting order ('asc' or 'desc').
+     * @return array An array of Movie entities matching the search criteria.
+     */
+
+    public function search(int $page, int $perPage, string $sortBy, string $sortOrder): array;
 }
