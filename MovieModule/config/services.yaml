@@ -11,7 +11,7 @@ services:
         
         App\Movies\UserInterface\ApiPlatform\Serializer\Denormalize\CreateMovieResourceNormalizer:
             tags: [ serializer.normalizer ]
-        # Ratings
+        # Ratings 
         App\Ratings\UserInterface\ApiPlatform\Serializer\Normalizer\RatingResourceNormalizer:
             tags:
                 - { name: serializer.normalizer, priority: 256 }
