@@ -9,7 +9,6 @@ use App\Ratings\Domain\Exception\RatingNotFound;
 use App\Ratings\Domain\Repository\RatingRepository;
 use App\Ratings\Domain\ValueObject\MovieId;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
