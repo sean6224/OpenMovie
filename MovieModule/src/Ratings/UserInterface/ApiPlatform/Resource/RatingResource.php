@@ -5,10 +5,12 @@ namespace App\Ratings\UserInterface\ApiPlatform\Resource;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
 
 use App\Ratings\Application\DTO\RatingDTO;
 use App\Ratings\UserInterface\ApiPlatform\Processor\CreateRatingProcessor;
 use App\Ratings\UserInterface\ApiPlatform\Provider\RatingCollectionProvider;
+use App\Ratings\UserInterface\ApiPlatform\Provider\SingleRatingProvider;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -31,6 +33,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
             openapiContext: ['summary' => 'List all rating.'],
             provider: RatingCollectionProvider::class,
         ),
+        new Get(
+            uriTemplate: '/movie/ratings/get',
+            openapiContext: ['summary' => 'List single rating.'],
+            provider: SingleRatingProvider::class,
+        ),
     ]
 )]
 
@@ -46,13 +53,13 @@ class RatingResource
         #[Groups(groups: ['read'])]
         public ?string $id = null,
 
-        #[Groups(groups: ['send'])]
+        #[Groups(groups: ['send', 'return'])]
         public ?string $movieId = null,
 
         #[Groups(groups: ['send'])]
         public ?string $userId = null,
 
-        #[Groups(groups: ['send', 'accept'])]
+        #[Groups(groups: ['send'])]
         public float $averageRating = 0.0
     ) {
     }
