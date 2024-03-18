@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Ratings\Domain\Exception;
 
-use App\Ratings\Domain\ValueObject\UserId;
+use App\Common\Domain\ValueObject\UserId;
 use DomainException;
 
 /**
