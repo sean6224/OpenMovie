@@ -5,9 +5,8 @@ namespace App\Ratings\Domain\Entity;
 use App\Common\Domain\Entity\AggregateRoot;
 use App\Common\Domain\ValueObject\DateTime;
 use App\Common\Domain\ValueObject\Id;
-
 use App\Ratings\Domain\ValueObject\MovieId;
-use App\Ratings\Domain\ValueObject\UserId;
+use App\Common\Domain\ValueObject\UserId;
 use App\Ratings\Domain\ValueObject\AverageRating;
 
 /**
