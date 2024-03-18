@@ -38,7 +38,12 @@ services:
     # Doctrine
     App\Movies\Domain\Repository\MovieRepository:
         alias: App\Movies\Infrastructure\Doctrine\Repository\DoctrineMovieRepository
-
+    App\Ratings\Domain\Repository\RatingRepository:
+        alias: App\Ratings\Infrastructure\Doctrine\Repository\DoctrineRatingRepository
+        
     # InMemory
     # App\Movies\Domain\Repository\MovieRepository:
     #     alias: App\Movies\Infrastructure\InMemory\InMemoryMovieRepository
+
+    # App\Ratings\Domain\Repository\RatingRepository:
+    #     alias: App\Ratings\Infrastructure\InMemory\InMemoryRatingRepository
