@@ -4,8 +4,11 @@ namespace App\Ratings\UserInterface\ApiPlatform\Resource;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\GetCollection;
+
 use App\Ratings\Application\DTO\RatingDTO;
 use App\Ratings\UserInterface\ApiPlatform\Processor\CreateRatingProcessor;
+use App\Ratings\UserInterface\ApiPlatform\Provider\RatingCollectionProvider;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -22,6 +25,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
             denormalizationContext: ['groups' => ['send']],
             validationContext: ['groups' => ['read', 'send']],
             processor: CreateRatingProcessor::class,
+        ),
+        new GetCollection(
+            uriTemplate: '/movie/ratings/get',
+            openapiContext: ['summary' => 'List all rating.'],
+            provider: RatingCollectionProvider::class,
         ),
     ]
 )]
