@@ -18,7 +18,6 @@ doctrine:
             
             # Module Movies
             movie_name: App\Movies\Infrastructure\Doctrine\Type\MovieNameType
-            movie_id: App\Movies\Infrastructure\Doctrine\Type\MovieIdType
             description: App\Movies\Infrastructure\Doctrine\Type\DescriptionType
             releaseYear: App\Movies\Infrastructure\Doctrine\Type\ReleaseYearType
             duration: App\Movies\Infrastructure\Doctrine\Type\DurationType
@@ -32,7 +31,7 @@ doctrine:
             subtitles: App\Movies\Infrastructure\Doctrine\Type\SubtitlesType
             
             # Module Movies -> Ratings
-            
+            movie_id: App\Movies\Infrastructure\Doctrine\Type\MovieIdType
             
     orm:
         auto_generate_proxy_classes: true
