@@ -29,12 +29,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
             processor: CreateRatingProcessor::class,
         ),
         new GetCollection(
-            uriTemplate: '/movie/ratings/get',
+            uriTemplate: '/movie/ratings/get/all_list',
             openapiContext: ['summary' => 'List all rating.'],
             provider: RatingCollectionProvider::class,
         ),
         new Get(
-            uriTemplate: '/movie/ratings/get',
+            uriTemplate: '/movie/ratings/get/single',
             openapiContext: ['summary' => 'List single rating.'],
             provider: SingleRatingProvider::class,
         ),
