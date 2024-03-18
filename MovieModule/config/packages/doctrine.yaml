@@ -32,6 +32,7 @@ doctrine:
             
             # Module Movies -> Ratings
             movie_id: App\Ratings\Infrastructure\Doctrine\Type\MovieIdType
+            average_Rating: App\Ratings\Infrastructure\Doctrine\Type\AverageRatingType
             
     orm:
         auto_generate_proxy_classes: true
