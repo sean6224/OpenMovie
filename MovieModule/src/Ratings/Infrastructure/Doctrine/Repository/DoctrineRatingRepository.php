@@ -87,9 +87,11 @@ class DoctrineRatingRepository extends ServiceEntityRepository implements Rating
         $queryBuilder = $this->createBaseQueryBuilder();
         $queryBuilder
             ->setFirstResult(($page - 1) * $perPage)
-            ->setMaxResults($perPage)
-            ->orderBy(self::ALIAS . '.' . $sortBy, $sortOrder);
+            ->setMaxResults($perPage);
 
+        if ($sortBy !== '') {
+            $queryBuilder->orderBy(self::ALIAS . '.' . $sortBy, $sortOrder);
+        }
         return $queryBuilder->getQuery()->getResult();
     }
 
