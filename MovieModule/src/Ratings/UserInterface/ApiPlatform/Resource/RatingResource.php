@@ -25,25 +25,25 @@ use Symfony\Component\Serializer\Annotation\Groups;
     operations: [
         new Post(
             uriTemplate: '/movie/ratings/add',
-            openapiContext: ['summary' => 'Adds a new rating for movie'],
+            openapiContext: ['summary' => 'Initiates addition of new movie rating'],
             denormalizationContext: ['groups' => ['send']],
             validationContext: ['groups' => ['read', 'send']],
             processor: CreateRatingProcessor::class,
         ),
         new GetCollection(
             uriTemplate: '/movie/ratings/get/all_list',
-            openapiContext: ['summary' => 'List all rating.'],
+            openapiContext: ['summary' => 'Retrieves comprehensive list of all movie ratings'],
             provider: RatingCollectionProvider::class,
         ),
         new Get(
             uriTemplate: '/movie/ratings/get/single/{id}',
-            openapiContext: ['summary' => 'List single rating.'],
+            openapiContext: ['summary' => 'Fetches detailed information about specific movie rating'],
             provider: SingleRatingProvider::class,
         ),
 
         new Patch(
             uriTemplate: '/movie/ratings/{id}',
-            openapiContext: ['summary' => 'Update rating for movie.'],
+            openapiContext: ['summary' => 'Allows modification of an existing movie rating, ensuring accuracy and relevance of user-contributed assessments over time'],
             denormalizationContext: ['groups' => ['patch']],
             provider: SingleRatingProvider::class,
             processor: PatchRatingProcessor::class,
