@@ -73,6 +73,18 @@ class DoctrineMovieRepository extends ServiceEntityRepository implements MovieRe
     }
 
     /**
+     * Retrieves all movies.
+     *
+     * @return Movie[]
+     */
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Retrieves a movie entity by its name.
      *
      * @param MovieName $movieName The name of the movie.

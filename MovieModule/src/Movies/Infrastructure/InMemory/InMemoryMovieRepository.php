@@ -57,6 +57,16 @@ final class InMemoryMovieRepository extends InMemoryRepository implements MovieR
     }
 
     /**
+     * Retrieves all movies from repository.
+     *
+     * @return array An array of all Movie entities.
+     */
+    public function findAll(): array
+    {
+        return array_values($this->entities);
+    }
+
+    /**
      * Finds a movie by its name.
      *
      * @param MovieName $movieName The name of the movie to find.
