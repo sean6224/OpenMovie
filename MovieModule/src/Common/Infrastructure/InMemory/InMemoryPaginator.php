@@ -7,7 +7,7 @@ use EmptyIterator;
 use Exception;
 use IteratorIterator;
 use LimitIterator;
-use Traversable;
+use ReturnTypeWillChange;
 use Webmozart\Assert\Assert;
 
 /**
@@ -17,14 +17,14 @@ use Webmozart\Assert\Assert;
  *
  * @implements PaginatorInterface<T>
  */
-final readonly class InMemoryPaginator implements PaginatorInterface
+final class InMemoryPaginator implements PaginatorInterface
 {
     /**
-     * The offset for the current page.
+     * The offset for current page.
      */
     private int $offset;
     /**
-     * The limit for the current page.
+     * The limit for current page.
      */
     private int $limit;
     /**
@@ -35,16 +35,16 @@ final readonly class InMemoryPaginator implements PaginatorInterface
     /**
      * Constructs the paginator.
      *
-     * @param Traversable<T> $items The items to paginate.
+     * @param array<T> $items The items to paginate.
      * @param int $totalItems The total number of items.
      * @param int $currentPage The current page number.
      * @param int $itemsPerPage The number of items per page.
      */
     public function __construct(
-        private Traversable $items,
-        private int $totalItems,
-        private int $currentPage,
-        private int $itemsPerPage,
+        private readonly array $items,
+        private readonly int $totalItems,
+        private readonly int $currentPage,
+        private readonly int $itemsPerPage,
     ) {
         Assert::greaterThanEq($totalItems, 0);
         Assert::positiveInteger($currentPage);
@@ -96,28 +96,27 @@ final readonly class InMemoryPaginator implements PaginatorInterface
     }
 
     /**
-     * Counts the number of items in the paginator.
+     * Counts the number of items in paginator.
      *
-     * @throws Exception If an error occurs while counting the items.
+     * @throws Exception If an error occurs while counting items.
      *
      * @return int The number of items.
      */
     public function count(): int
     {
-        return iterator_count($this->getIterator());
+        return count($this->items);
     }
 
     /**
-     * Gets the iterator for the current page.
+     * Gets the iterator for current page.
      *
-     * @return Traversable The iterator for the current page.
+     * @return iterable The iterator for current page.
      */
-    public function getIterator(): Traversable
+    #[ReturnTypeWillChange] public function getIterator(): iterable
     {
         if ($this->currentPage > $this->lastPage) {
             return new EmptyIterator();
         }
-
         return new LimitIterator(new IteratorIterator($this->items), $this->offset, $this->limit);
     }
 }
