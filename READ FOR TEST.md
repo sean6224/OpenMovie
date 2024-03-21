@@ -1,3 +1,15 @@
+### How to run tests
+Make sure to replace class::function with the correct name of the test class and function.
+
+To run test with Xdebug debug mode enabled use following command:
+```bash
+XDEBUG_MODE=debug php vendor/bin/phpunit --filter class::function
+```
+For example to run `testCreateMovie` test from function test
+```bash
+XDEBUG_MODE=debug php vendor/bin/phpunit --filter CreateMovieTest::testCreateMovie
+```
+
 ## Fixing problem when testing at modules
  0.5. you need to create new `database`
 ```bash
