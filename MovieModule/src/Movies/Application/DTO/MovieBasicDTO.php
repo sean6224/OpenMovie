@@ -26,4 +26,20 @@ final readonly class MovieBasicDTO
         public float $averageRating
     ) {
     }
+    /**
+     * Convert movie parameters to an associative array.
+     *
+     * @return array An array containing movie parameters.
+     */
+    public function toArray(): array
+    {
+        return [
+            'movieName' => $this->movieName,
+            'description' => $this->description,
+            'releaseYear' => $this->releaseYear,
+            'duration' => $this->duration,
+            'ageRestriction' => $this->ageRestriction,
+            'averageRating' => $this->averageRating,
+        ];
+    }
 }
