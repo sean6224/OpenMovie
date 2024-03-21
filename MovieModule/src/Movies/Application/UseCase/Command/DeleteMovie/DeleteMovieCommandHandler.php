@@ -30,7 +30,7 @@ final readonly class DeleteMovieCommandHandler implements CommandHandler
     public function __invoke(DeleteMovieCommand $command): void
     {
         $this->deleteMovie->deleteMovie(
-            Id::fromString($command->movieId),
+            Id::fromString($command->movieId)
         );
     }
 }
