@@ -45,6 +45,14 @@ interface MovieRepository extends Repository
     public function get(Id $id): Movie;
 
     /**
+     * Retrieves all movies from repository.
+     *
+     * @return Movie[] An array of all Movie entities.
+     *
+     */
+    public function findAll(): array;
+
+    /**
      * Finds a movie by its name.
      *
      * @param MovieName $movieName The name of the movie to find.
