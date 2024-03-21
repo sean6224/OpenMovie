@@ -110,6 +110,7 @@
     },
     "require-dev": {
         "api-platform/schema-generator": "^5.1",
+        "fakerphp/faker": "^1.23",
         "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest",
         "symfony/browser-kit": "6.1.*",
