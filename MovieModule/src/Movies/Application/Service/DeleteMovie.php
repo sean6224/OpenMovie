@@ -41,7 +41,7 @@ final readonly class DeleteMovie
             $movie = $this->movieRepository->get($movieId);
             $this->movieRepository->remove($movie);
             $this->entityManager->commit();
-        } catch (Exception $exception) {
+        } catch (Exception) {
             $this->entityManager->rollback();
             throw new MovieCannotBeDeletedException($movieId);
         }
