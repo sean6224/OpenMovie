@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Tests\Movie;
 
 use App\Common\Application\Command\CommandBus;
