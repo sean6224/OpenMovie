@@ -20,11 +20,11 @@ use InvalidArgumentException;
 
 class FakeDataMovie
 {
-    private CommandBus $commandBus;
-    private MovieRepository $movieRepository;
+    private ?CommandBus $commandBus;
+    private ?MovieRepository $movieRepository;
     private Generator $faker;
 
-    public function __construct(CommandBus $commandBus, MovieRepository $movieRepository)
+    public function __construct(CommandBus $commandBus = null, MovieRepository $movieRepository = null)
     {
         $this->commandBus = $commandBus;
         $this->movieRepository = $movieRepository;
@@ -107,7 +107,7 @@ class FakeDataMovie
      *
      * @return MovieBasicDTO The basic movie data.
      */
-    private function generateMovieBasicData(): MovieBasicDTO
+    public function generateMovieBasicData(): MovieBasicDTO
     {
         return new MovieBasicDTO(
             movieName: $this->faker->name(),
@@ -124,7 +124,7 @@ class FakeDataMovie
      *
      * @return MovieDetailsParameterDTO The detailed movie data.
      */
-    private function generateMovieDetailsParamData(): MovieDetailsParameterDTO
+    public function generateMovieDetailsParamData(): MovieDetailsParameterDTO
     {
         return new MovieDetailsParameterDTO(
             productionCountry: [$this->faker->country()],
