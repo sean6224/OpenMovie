@@ -45,12 +45,11 @@ interface MovieRepository extends Repository
     public function get(Id $id): Movie;
 
     /**
-     * Retrieves all movies from repository.
+     * Finds the movie.
      *
-     * @return Movie[] An array of all Movie entities.
-     *
+     * @return Movie|null The last movie entity, or null if no movies are found.
      */
-    public function findAll(): array;
+    public function findLastMovie(): ?Movie;
 
     /**
      * Finds a movie by its name.
