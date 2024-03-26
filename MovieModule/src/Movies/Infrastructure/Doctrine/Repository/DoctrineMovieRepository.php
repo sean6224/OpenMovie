@@ -73,15 +73,17 @@ class DoctrineMovieRepository extends ServiceEntityRepository implements MovieRe
     }
 
     /**
-     * Retrieves all movies.
+     * Finds the last movie in the database.
      *
-     * @return Movie[]
+     * @return Movie|null The last movie entity, or null if no movies are found.
      */
-    public function findAll(): array
+    public function findLastMovie(): ?Movie
     {
         return $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'DESC')
+            ->setMaxResults(1)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 
     /**
