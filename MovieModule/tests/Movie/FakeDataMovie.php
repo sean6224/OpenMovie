@@ -16,7 +16,6 @@ use App\Movies\Domain\ValueObject\MovieName;
 use App\Movies\Domain\ValueObject\ReleaseYear;
 use Faker\Factory;
 use Faker\Generator;
-use InvalidArgumentException;
 
 class FakeDataMovie
 {
@@ -34,33 +33,25 @@ class FakeDataMovie
     /**
      * Creates movies using generated data.
      *
-     * @param int $count The number of movies to create.
      * @param bool $return Whether to return the ID of last created movie.
      * @return string|null The ID of last created movie or null if no movies were created or $return is false.
      */
-    public function createMovie(int $count, bool $return = false): ?string
+    public function createMovie(bool $return = false): ?string
     {
-        if ($count <= 0) {
-            throw new InvalidArgumentException('The count parameter must be greater than zero.');
-        }
-
         $lastMovieId = null;
-        for ($i = 0; $i < $count; $i++) {
-            $movieBasicData = $this->generateMovieBasicData();
-            $movieDetailsParamData = $this->generateMovieDetailsParamData();
+        $movieBasicData = $this->generateMovieBasicData();
+        $movieDetailsParamData = $this->generateMovieDetailsParamData();
 
-            $createMovieCommand = new CreateMovieCommand(
-                movieName: $movieBasicData->movieName,
-                description: $movieBasicData->description,
-                releaseYear: $movieBasicData->releaseYear,
-                movieData: $movieDetailsParamData,
-                duration: $movieBasicData->duration,
-                ageRestriction: $movieBasicData->ageRestriction,
-                averageRating: $movieBasicData->averageRating
-            );
-            $this->commandBus->dispatch($createMovieCommand);
-        }
-
+        $createMovieCommand = new CreateMovieCommand(
+            movieName: $movieBasicData->movieName,
+            description: $movieBasicData->description,
+            releaseYear: $movieBasicData->releaseYear,
+            movieData: $movieDetailsParamData,
+            duration: $movieBasicData->duration,
+            ageRestriction: $movieBasicData->ageRestriction,
+            averageRating: $movieBasicData->averageRating
+        );
+        $this->commandBus->dispatch($createMovieCommand);
         if ($return) {
             $lastMovieId = $this->getLastMovieId();
         }
@@ -74,9 +65,8 @@ class FakeDataMovie
      */
     private function getLastMovieId(): ?string
     {
-        $movies = $this->movieRepository->findAll();
-        $lastMovie = end($movies);
-        return $lastMovie ? $lastMovie->id()->value() : null;
+        $lastMovie = $this->movieRepository->findLastMovie();
+        return $lastMovie?->id()->value();
     }
 
     /**
@@ -100,6 +90,36 @@ class FakeDataMovie
             AgeRestriction::fromInt($movieBasicData->ageRestriction),
             AverageRating::fromFloat($movieBasicData->averageRating)
         );
+    }
+
+    /**
+     * Generates data for movie.
+     *
+     * @param int $index The index of movie.
+     * @return array The movie data.
+     */
+    public function generateMovieData(int $index): array
+    {
+        $movieBasicData = $this->generateMovieBasicData()->toArray();
+        $movieDetailsParamData = $this->generateMovieDetailsParamData()->toArray();
+
+        return [
+            'movieInformation' => [
+                'movieName' => 'Test Movie 4' . $index,
+                'description' => $movieBasicData['description'],
+                'releaseYear' => $movieBasicData['releaseYear'],
+                'productionCountry' => $movieDetailsParamData['productionCountry'],
+                'directors' => $movieDetailsParamData['directors'],
+                'actors' => $movieDetailsParamData['actors'],
+                'category' => $movieDetailsParamData['category'],
+                'tags' => $movieDetailsParamData['tags'],
+                'languages' => $movieDetailsParamData['languages'],
+                'subtitles' => $movieDetailsParamData['subtitles'],
+                'duration' => $movieBasicData['duration'],
+                'ageRestriction' => $movieBasicData['ageRestriction'],
+                'averageRating' => $movieBasicData['averageRating']
+            ]
+        ];
     }
 
     /**
