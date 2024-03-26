@@ -57,14 +57,17 @@ final class InMemoryMovieRepository extends InMemoryRepository implements MovieR
     }
 
     /**
-     * Retrieves all movies from repository.
+     * Retrieves the last added movie from repository.
      *
-     * @return array An array of all Movie entities.
+     * @return Movie|null The last added movie entity, or null if no movies are found.
      */
-    public function findAll(): array
+    public function findLastMovie(): ?Movie
     {
-        return array_values($this->entities);
+        end($this->entities);
+        $lastMovie = current($this->entities);
+        return $lastMovie ?: null;
     }
+
 
     /**
      * Finds a movie by its name.
