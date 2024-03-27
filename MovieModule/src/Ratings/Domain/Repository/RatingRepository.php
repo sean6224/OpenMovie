@@ -45,6 +45,13 @@ interface RatingRepository extends Repository
     public function get(Id $id): Rating;
 
     /**
+     * Finds rating.
+     *
+     * @return Rating|null The last rating entity, or null if no ratings are found.
+     */
+    public function findLastRating(): ?Rating;
+
+    /**
      * Finds rating by user ID.
      *
      * @param MovieId $movieId The movie ID.
