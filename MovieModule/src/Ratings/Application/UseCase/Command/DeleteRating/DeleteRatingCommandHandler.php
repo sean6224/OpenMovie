@@ -6,7 +6,7 @@ use App\Common\Application\Command\CommandHandler;
 use App\Common\Domain\ValueObject\Id;
 use App\Ratings\Application\Service\DeleteRating;
 
-class DeleteRatingCommandHandler  implements CommandHandler
+readonly class DeleteRatingCommandHandler implements CommandHandler
 {
     /**
      * Constructs new DeleteRatingCommandHandler instance.
