@@ -6,9 +6,8 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\Common\Application\Command\CommandBus;
 use App\Movies\Application\UseCase\Command\DeleteMovie\DeleteMovieCommand;
 use App\Movies\Domain\Repository\MovieRepository;
-use App\Tests\Movie\FakeDataMovie;
+use App\Tests\Movie\DummyFactory\DummyMovieFactory;
 use Exception;
-
 
 /**
  * Performance test for deleting movies in batches.
@@ -17,39 +16,30 @@ use Exception;
  */
 class DeletePerformanceTest extends ApiTestCase
 {
-    private static CommandBus $commandBus;
-    private static MovieRepository $movieRepository;
-    private static FakeDataMovie $fakeDataMovie;
     private const ITERATIONS = 100;
     private const BATCH_SIZE = 50;
     private float $executionTime = 0.0;
-
-    /**
-     * @throws Exception
-     */
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-        static::$commandBus = static::getContainer()->get(CommandBus::class);
-        static::$movieRepository = static::getContainer()->get(MovieRepository::class);
-        static::$fakeDataMovie = new FakeDataMovie(static::$commandBus, static::$movieRepository);
-    }
 
     /**
      * Tests the performance of deleting movies in batches.
      *
      * This test sends multiple requests to delete movies in batches and measures execution time.
      *
+     * @throws Exception
      */
     public function testDeleteMovie(): void
     {
+        $movieRepository = static::getContainer()->get(MovieRepository::class);
+        $commandBus = static::getContainer()->get(CommandBus::class);
+
         $startTime = microtime(true);
 
         for ($batch = 0; $batch < self::ITERATIONS; $batch += self::BATCH_SIZE) {
             for ($i = $batch; $i < min($batch + self::BATCH_SIZE, self::ITERATIONS); $i++) {
-                $movieId = static::$fakeDataMovie->createMovie(true);
-                self::assertNotEmpty($movieId, 'The movie ID should not be empty.');
-                static::$commandBus->dispatch(new DeleteMovieCommand($movieId));
+                $movie = DummyMovieFactory::createMovie();
+                $movieRepository->add($movie);
+                self::assertNotEmpty($movie->id()->value(), 'The movie ID should not be empty.');
+                $commandBus->dispatch(new DeleteMovieCommand($movie->id()->value()));
             }
         }
 
