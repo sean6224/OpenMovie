@@ -58,6 +58,18 @@ final class InMemoryRatingRepository extends InMemoryRepository implements Ratin
     }
 
     /**
+     * Retrieves last added rating from repository.
+     *
+     * @return Rating|null The last added rating entity, or null if no rating are found.
+     */
+    public function findLastRating(): ?Rating
+    {
+        end($this->entities);
+        $lastRating = current($this->entities);
+        return $lastRating ?: null;
+    }
+
+    /**
      * Finds rating by user ID and movie ID.
      *
      * @param MovieId $movieId The movie ID.

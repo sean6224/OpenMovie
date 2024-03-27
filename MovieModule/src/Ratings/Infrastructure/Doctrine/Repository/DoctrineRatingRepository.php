@@ -9,6 +9,7 @@ use App\Ratings\Domain\Exception\RatingNotFound;
 use App\Ratings\Domain\Repository\RatingRepository;
 use App\Ratings\Domain\ValueObject\MovieId;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -71,6 +72,18 @@ class DoctrineRatingRepository extends ServiceEntityRepository implements Rating
             throw new RatingNotFound($id);
         }
         return $rating;
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findLastRating(): ?Rating
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
