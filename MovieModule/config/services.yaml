@@ -53,6 +53,9 @@ services:
         alias: App\Ratings\Infrastructure\Doctrine\Repository\DoctrineRatingRepository
         public: true
         
+    App\Movies\Infrastructure\InMemory\InMemoryMovieRepository:
+        public: true
+        
     # InMemory
     # App\Movies\Domain\Repository\MovieRepository:
     #     alias: App\Movies\Infrastructure\InMemory\InMemoryMovieRepository
