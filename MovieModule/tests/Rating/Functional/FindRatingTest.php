@@ -8,7 +8,6 @@ use App\Tests\Rating\DummyFactory\DummyRatingFactory;
 use App\Ratings\Application\UseCase\Query\GetRating\GetRatingQuery;
 use Exception;
 
-
 /**
  * Functional tests for finding rating.
  */
