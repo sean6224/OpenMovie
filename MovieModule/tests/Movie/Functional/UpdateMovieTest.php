@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace App\Tests\Movie\Functional;
 
-use App\Common\Application\Command\CommandBus;
 use App\Common\Domain\ValueObject\Id;
 use App\Movies\Application\DTO\MovieBasicDTO;
 use App\Movies\Application\DTO\MovieDetailsParameterDTO;
@@ -21,7 +20,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UpdateMovieTest extends KernelTestCase
 {
-    private static CommandBus $commandBus;
     private static MovieRepository $movieRepository;
     private Generator $faker;
     /**
@@ -33,7 +31,6 @@ class UpdateMovieTest extends KernelTestCase
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-        static::$commandBus = static::getContainer()->get(CommandBus::class);
         static::$movieRepository = static::getContainer()->get(MovieRepository::class);
     }
     protected function setUp(): void
