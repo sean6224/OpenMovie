@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Tests\Movie\DummyFactory;
 
 use App\Movies\Application\DTO\MovieBasicDTO;
