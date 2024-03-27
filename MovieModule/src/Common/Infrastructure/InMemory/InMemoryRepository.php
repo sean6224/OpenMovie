@@ -90,7 +90,7 @@ abstract class InMemoryRepository implements Repository
         }
 
         return new InMemoryPaginator(
-            new ArrayIterator($this->entities),
+            (array)new ArrayIterator($this->entities),
             count($this->entities),
             $this->page,
             $this->itemsPerPage,
