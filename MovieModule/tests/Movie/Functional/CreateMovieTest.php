@@ -2,10 +2,9 @@
 declare(strict_types=1);
 namespace App\Tests\Movie\Functional;
 
-use App\Common\Application\Command\CommandBus;
 use App\Movies\Domain\Repository\MovieRepository;
 use App\Movies\Domain\Entity\Movie;
-use App\Tests\Movie\FakeDataMovie;
+use App\Tests\Movie\DummyFactory\DummyMovieFactory;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -14,9 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class CreateMovieTest extends KernelTestCase
 {
-    private static CommandBus $commandBus;
     private static MovieRepository $movieRepository;
-    private static FakeDataMovie $fakeDataMovie;
 
     /**
      * Sets up the test class before running tests.
@@ -27,9 +24,7 @@ class CreateMovieTest extends KernelTestCase
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-        static::$commandBus = static::getContainer()->get(CommandBus::class);
         static::$movieRepository = static::getContainer()->get(MovieRepository::class);
-        static::$fakeDataMovie = new FakeDataMovie(static::$commandBus, static::$movieRepository);
     }
 
     /**
@@ -39,10 +34,9 @@ class CreateMovieTest extends KernelTestCase
      */
     public function testCreateMovie(): void
     {
-        static::$fakeDataMovie->createMovie();
+        DummyMovieFactory::createMovie();
         $movies = static::$movieRepository->findLastMovie();
-
-        $this->assertNotEmpty($movies, 'No movies found in the repository.');
-        $this->assertInstanceOf(Movie::class, $movies, 'Failed to fetch movie from the repository.');
+        $this->assertNotEmpty($movies, 'No movies found in repository.');
+        $this->assertInstanceOf(Movie::class, $movies, 'Failed to fetch movie from repository.');
     }
 }

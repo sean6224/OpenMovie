@@ -2,11 +2,11 @@
 declare(strict_types=1);
 namespace App\Tests\Movie\Functional;
 
-use App\Tests\Movie\FakeDataMovie;
+use App\Movies\Application\Service\DeleteMovie;
+use App\Tests\Movie\DummyFactory\DummyMovieFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\Common\Application\Command\CommandBus;
 use App\Movies\Domain\Repository\MovieRepository;
-use App\Movies\Application\UseCase\Command\DeleteMovie\DeleteMovieCommand;
 use Exception;
 
 /**
@@ -16,8 +16,7 @@ class CreateDeleteTest extends KernelTestCase
 {
     private static CommandBus $commandBus;
     private static MovieRepository $movieRepository;
-    private static FakeDataMovie $fakeDataMovie;
-
+    private static DeleteMovie $deleteMovie;
     /**
      * Sets up the test class before running tests.
      *
@@ -29,7 +28,7 @@ class CreateDeleteTest extends KernelTestCase
         parent::setUpBeforeClass();
         static::$commandBus = static::getContainer()->get(CommandBus::class);
         static::$movieRepository = static::getContainer()->get(MovieRepository::class);
-        static::$fakeDataMovie = new FakeDataMovie(static::$commandBus, static::$movieRepository);
+        static::$deleteMovie = static::getContainer()->get(DeleteMovie::class);
     }
 
     /**
@@ -40,9 +39,10 @@ class CreateDeleteTest extends KernelTestCase
      */
     public function testDeleteMovie(): void
     {
-        $movieId = static::$fakeDataMovie->createMovie(true);
+        DummyMovieFactory::createMovie();
         $movies = static::$movieRepository->findLastMovie();
         $this->assertNotEmpty($movies, 'No movies found in the repository.');
-        static::$commandBus->dispatch(new DeleteMovieCommand($movieId));
+        static::$deleteMovie->deleteMovie($movies->id());
+
     }
 }
