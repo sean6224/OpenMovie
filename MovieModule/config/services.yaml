@@ -24,16 +24,22 @@ services:
         App\Common\Application\Command\CommandHandler:
             tags:
                 - { name: 'messenger.message_handler', bus: 'command.bus' }
-
+    
     # Common
     App\Common\:
         resource: '%kernel.project_dir%/src/Common/'
+        public: true
         exclude:
             - '%kernel.project_dir%/src/Common/Infrastructure/Symfony/Kernel.php'
+
+    App\Common\Infrastructure\InMemory\InMemoryPaginator:
+        arguments:
+            $items: []
 
     # Movies
     App\Movies\:
         resource: '%kernel.project_dir%/src/Movies/'
+    
     
     # Ratings
     App\Ratings\:
@@ -42,8 +48,10 @@ services:
     # Doctrine
     App\Movies\Domain\Repository\MovieRepository:
         alias: App\Movies\Infrastructure\Doctrine\Repository\DoctrineMovieRepository
+        public: true
     App\Ratings\Domain\Repository\RatingRepository:
         alias: App\Ratings\Infrastructure\Doctrine\Repository\DoctrineRatingRepository
+        public: true
         
     # InMemory
     # App\Movies\Domain\Repository\MovieRepository:
