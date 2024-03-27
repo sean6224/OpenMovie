@@ -7,7 +7,7 @@ use App\Common\Application\Command\CommandBus;
 use App\Common\Application\Query\QueryBus;
 use App\Movies\Domain\Repository\MovieRepository;
 use App\Movies\UserInterface\ApiPlatform\Resource\MovieResource;
-use App\Tests\Movie\FakeDataMovie;
+use App\Tests\Movie\DummyFactory\DummyMovieFactory;
 use Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -25,7 +25,6 @@ class MovieCrudTest extends ApiTestCase
     private static CommandBus $commandBus;
     private static QueryBus $queryBus;
     private static MovieRepository $movieRepository;
-    private static FakeDataMovie $fakeDataMovie;
 
     /**
      * Sets up the test class before running tests.
@@ -38,7 +37,6 @@ class MovieCrudTest extends ApiTestCase
         static::$commandBus = static::getContainer()->get(CommandBus::class);
         static::$queryBus = static::getContainer()->get(QueryBus::class);
         static::$movieRepository = static::getContainer()->get(MovieRepository::class);
-        static::$fakeDataMovie = new FakeDataMovie(static::$commandBus, static::$movieRepository);
     }
 
     /**
@@ -56,7 +54,7 @@ class MovieCrudTest extends ApiTestCase
          * Note to repair
          */
         $client = static::createClient();
-        static::$fakeDataMovie->createMovie(100);
+         DummyMovieFactory::createMovie();
 
         $client->request('GET', '/movies/get/all_list');
 
@@ -84,8 +82,8 @@ class MovieCrudTest extends ApiTestCase
     public function testReturnMovie(): void
     {
         $client = static::createClient();
-        $movieId = static::$fakeDataMovie->createMovie(1, true);
-        $client->request('GET', sprintf('/movies/single/%s', $movieId));
+        $movies = DummyMovieFactory::createMovie();
+        $client->request('GET', sprintf('/movies/single/%s', $movies->id()->value()));
         static::assertResponseIsSuccessful();
         static::assertMatchesResourceItemJsonSchema(MovieResource::class);
     }
@@ -101,9 +99,8 @@ class MovieCrudTest extends ApiTestCase
     public function testDeleteMovie(): void
     {
         $client = static::createClient();
-        $movieId = static::$fakeDataMovie->createMovie(1, true);
-
-        $response = $client->request('DELETE', sprintf('/movies/%s', $movieId));
+        $movies = DummyMovieFactory::createMovie();
+        $response = $client->request('DELETE', sprintf('/movies/%s', $movies->id()->value()));
         static::assertResponseIsSuccessful();
         static::assertEmpty($response->getContent());
     }
