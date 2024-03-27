@@ -27,7 +27,7 @@ readonly class DeleteRatingCommandHandler implements CommandHandler
      */
     public function __invoke(DeleteRatingCommand $command): void
     {
-        $this->deleteRating->deleteMovie(
+        $this->deleteRating->deleteRating(
             Id::fromString($command->ratingId)
         );
     }
