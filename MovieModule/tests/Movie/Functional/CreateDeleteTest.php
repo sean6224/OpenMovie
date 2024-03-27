@@ -26,8 +26,7 @@ class CreateDeleteTest extends KernelTestCase
         $movieRepository = static::getContainer()->get(MovieRepository::class);
         $commandBus = static::getContainer()->get(CommandBus::class);
 
-        DummyMovieFactory::createMovie();
-        $movies = $movieRepository->findLastMovie();
+        $movies = DummyMovieFactory::createMovie();
         $commandBus->dispatch(new DeleteMovieCommand($movies->id()->value()));
         $this->assertNotEmpty($movies, 'No movies found in the repository.');
     }
