@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace App\Tests\Movie\Functional;
 
+use App\Common\Application\Query\QueryBus;
+use App\Movies\Application\UseCase\Query\SearchMoviesPaginatedQuery\SearchMoviesPaginatedQuery;
 use App\Tests\Movie\DummyFactory\DummyMovieFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\Movies\Domain\Repository\MovieRepository;
@@ -12,19 +14,6 @@ use Exception;
  */
 class MutipleFindMoviesTest extends KernelTestCase
 {
-    private static MovieRepository $movieRepository;
-
-    /**
-     * Sets up test class before running tests.
-     *
-     * @throws Exception
-     */
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-        static::$movieRepository = static::getContainer()->get(MovieRepository::class);
-    }
-
     /**
      * Test to find multiple movies.
      *
@@ -32,16 +21,21 @@ class MutipleFindMoviesTest extends KernelTestCase
      */
     public function testFindMovies(): void
     {
-        for ($i = 0; $i < 5; $i++) {
-            DummyMovieFactory::createMovie();
+        $movieRepository = static::getContainer()->get(MovieRepository::class);
+        $queryBus = static::getContainer()->get(QueryBus::class);
+
+        $initialMovies = array_map(static function () {
+            return DummyMovieFactory::createMovie();
+        }, range(1, 5));
+
+        foreach ($initialMovies as $movie) {
+            $movieRepository->add($movie);
         }
 
-        $movies = self::$movieRepository->search(
-            1,
-            20,
-            'releaseYear',
-            'asc'
+        $movies = $queryBus->ask(
+            new SearchMoviesPaginatedQuery(1, 5)
         );
-        $this->assertNotEmpty($movies, 'No movies found.');
+
+        static::assertCount(count($initialMovies), $movies);
     }
 }

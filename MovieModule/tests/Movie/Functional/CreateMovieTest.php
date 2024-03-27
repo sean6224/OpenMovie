@@ -2,10 +2,14 @@
 declare(strict_types=1);
 namespace App\Tests\Movie\Functional;
 
+use App\Common\Application\Command\CommandBus;
+use App\Movies\Application\UseCase\Command\CreateMovie\CreateMovieCommand;
 use App\Movies\Domain\Repository\MovieRepository;
 use App\Movies\Domain\Entity\Movie;
 use App\Tests\Movie\DummyFactory\DummyMovieFactory;
 use Exception;
+use Faker\Factory;
+use Faker\Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -13,18 +17,12 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class CreateMovieTest extends KernelTestCase
 {
-    private static MovieRepository $movieRepository;
+    private Generator $faker;
 
-    /**
-     * Sets up the test class before running tests.
-     *
-     * @return void
-     * @throws Exception
-     */
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
-        parent::setUpBeforeClass();
-        static::$movieRepository = static::getContainer()->get(MovieRepository::class);
+        parent::setUp();
+        $this->faker = Factory::create();
     }
 
     /**
@@ -34,8 +32,25 @@ class CreateMovieTest extends KernelTestCase
      */
     public function testCreateMovie(): void
     {
-        DummyMovieFactory::createMovie();
-        $movies = static::$movieRepository->findLastMovie();
+        $movieRepository = static::getContainer()->get(MovieRepository::class);
+        $commandBus = static::getContainer()->get(CommandBus::class);
+
+        $movieData = DummyMovieFactory::generateMovieBasicData($this->faker);
+        $movieDetailsParameters = DummyMovieFactory::generateMovieDetailsParamData($this->faker);
+
+        $commandBus->dispatch(
+            new CreateMovieCommand(
+                movieName: $movieData->movieName,
+                description: $movieData->description,
+                releaseYear: $movieData->releaseYear,
+                movieData: $movieDetailsParameters,
+                duration: $movieData->duration,
+                ageRestriction: $movieData->ageRestriction,
+                averageRating: $movieData->averageRating
+            )
+        );
+
+        $movies = $movieRepository->findLastMovie();
         $this->assertNotEmpty($movies, 'No movies found in repository.');
         $this->assertInstanceOf(Movie::class, $movies, 'Failed to fetch movie from repository.');
     }

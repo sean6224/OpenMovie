@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace App\Tests\Movie\Functional;
 
+use App\Common\Application\Query\QueryBus;
+use App\Movies\Application\UseCase\Query\GetMovie\GetMovieQuery;
 use App\Tests\Movie\DummyFactory\DummyMovieFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\Movies\Domain\Repository\MovieRepository;
@@ -12,20 +14,6 @@ use Exception;
  */
 class FindMovieTest extends KernelTestCase
 {
-    private static MovieRepository $movieRepository;
-
-    /**
-     * Sets up the test class before running the tests.
-     *
-     * @return void
-     * @throws Exception
-     */
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-        static::$movieRepository = static::getContainer()->get(MovieRepository::class);
-    }
-
     /**
      * Test to find movie.
      *
@@ -34,9 +22,21 @@ class FindMovieTest extends KernelTestCase
      */
     public function testFindMovie(): void
     {
-        DummyMovieFactory::createMovie();
-        $lastMovie = static::$movieRepository->findLastMovie();
-        $movie = static::$movieRepository->get($lastMovie->id());
-        static::assertNotNull($movie, 'Movie not found in the repository.');
+        $movieRepository = static::getContainer()->get(MovieRepository::class);
+        $queryBus = static::getContainer()->get(QueryBus::class);
+
+        $movie = DummyMovieFactory::createMovie();
+        $movieRepository->add($movie);
+        $retrievedMovie = $queryBus->ask(
+            new GetMovieQuery(
+                $movie->id()->value()
+            )
+        );
+
+        static::assertSame(
+            $movie->id()->value(),
+            $retrievedMovie->id,
+            'Retrieved movie ID does not match expected movie ID'
+        );
     }
 }
