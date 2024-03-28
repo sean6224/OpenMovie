@@ -23,14 +23,14 @@ class MutipleFindsRatingTest extends KernelTestCase
 
         $initialRating = array_map(static function () {
             return DummyRatingFactory::createRating();
-        }, range(1, 3));
+        }, range(1, 5));
 
         foreach ($initialRating as $rating) {
             $ratingRepository->add($rating);
         }
 
         $ratings = $queryBus->ask(
-            new SearchRatingsPaginatedQuery(1, 3)
+            new SearchRatingsPaginatedQuery(1, 5)
         );
 
         static::assertCount(count($initialRating), $ratings);
