@@ -5,6 +5,7 @@ namespace App\Movies\UserInterface\ApiPlatform\Processor\Search;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Common\Application\Command\CommandBus;
+use App\Movies\Domain\Exception\MissingOrEmptyAttributesException;
 use App\Movies\Application\UseCase\Query\Search\SearchMoviesByCriteria\SearchMoviesByCriteriaCommand;
 use App\Movies\UserInterface\ApiPlatform\Resource\SearchResource;
 
@@ -37,6 +38,8 @@ final readonly class SearchMoviesByCriteriaProcessor implements ProcessorInterfa
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): SearchResource
     {
+        $this->validate($data);
+
         return $this->commandBus->dispatch(
             new SearchMoviesByCriteriaCommand(
                 filters: $data->getFilters(),
@@ -46,5 +49,31 @@ final readonly class SearchMoviesByCriteriaProcessor implements ProcessorInterfa
                 pageSize: $data->getPageSize()
             )
         );
+    }
+
+    /**
+     * Validates the provided data to ensure required attributes are not missing or empty.
+     *
+     * @param mixed $data The data to validate.
+     * @throws MissingOrEmptyAttributesException Thrown when required attributes are missing or empty.
+     */
+    private function validate(mixed $data): void
+    {
+        $requiredAttributes = [
+            'productionCountry' => false,
+            'category' => false,
+            'languages' => false,
+            'subtitles' => false
+        ];
+
+        foreach ($requiredAttributes as $attribute => $isRequired) {
+            if (!isset($data->filters[$attribute]) || empty(array_filter($data->filters[$attribute]))) {
+                $missingAttributes[] = $attribute;
+            }
+        }
+
+        if (!empty($missingAttributes)) {
+            throw new MissingOrEmptyAttributesException($missingAttributes);
+        }
     }
 }
