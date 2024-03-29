@@ -1,4 +1,4 @@
-# OpenMovie 🎥 - v0.1.0
+# OpenMovie 🎥 - v0.1.0 Sphinx
 > [!NOTE]
 > OpenMovie is an open source movie and series streaming platform.
 
