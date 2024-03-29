@@ -67,8 +67,7 @@ class DoctrineMovieRepositoryTest extends KernelTestCase
         $repository->add($movies);
         self::$em->flush();
 
-        $moviesAfterAddition = $repository->findAll();
-        static::assertCount(1, $moviesAfterAddition);
+        static::assertNotNull($repository->find($movies->id()));
     }
 
     /**
@@ -85,15 +84,15 @@ class DoctrineMovieRepositoryTest extends KernelTestCase
         $repository->add($movie);
         self::$em->flush();
 
-        static::assertCount(1, $repository->findAll());
+        static::assertNotNull($repository->find($movie->id()));
         $repository->remove($movie);
         self::$em->flush();
 
-        static::assertCount(0, $repository->findAll());
+        static::assertNull($repository->find($movie->id()));
     }
 
     /**
-     * Tests retrieving movie entity by its ID from repository.
+     * Tests retrieving movie entity by ID from repository.
      *
      * @throws \Exception
      */
