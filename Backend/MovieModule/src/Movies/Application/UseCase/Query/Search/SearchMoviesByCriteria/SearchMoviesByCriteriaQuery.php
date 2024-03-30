@@ -1,10 +1,10 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Movies\Application\UseCase\Query\Search\SearchMoviesByCriteria;
 
-use App\Common\Application\Command\Command;
+use App\Common\Application\Query\Query;
 
-final class SearchMoviesByCriteriaCommand implements Command
+final class SearchMoviesByCriteriaQuery implements Query
 {
     public function __construct(
         public array $filters,
