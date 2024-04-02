@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace App\Movies\Infrastructure\Doctrine\Repository\Applicator\CriteriaSearch;
+namespace App\Movies\Infrastructure\Doctrine\Applicator\CriteriaSearch;
 
 use Doctrine\ORM\QueryBuilder;
 

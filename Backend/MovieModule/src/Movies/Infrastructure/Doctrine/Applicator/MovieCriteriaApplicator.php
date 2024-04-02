@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
-namespace App\Movies\Infrastructure\Doctrine\Repository\Applicator;
+namespace App\Movies\Infrastructure\Doctrine\Applicator;
 
-use App\Movies\Infrastructure\Doctrine\Repository\Applicator\CriteriaSearch\DurationCriteriaApplicator;
-use App\Movies\Infrastructure\Doctrine\Repository\Applicator\CriteriaSearch\ProductionLocationsCriteriaApplicator;
+use App\Movies\Infrastructure\Doctrine\Applicator\CriteriaSearch\DurationCriteriaApplicator;
+use App\Movies\Infrastructure\Doctrine\Applicator\CriteriaSearch\ProductionLocationsCriteriaApplicator;
 use Doctrine\ORM\QueryBuilder;
 
 /**
