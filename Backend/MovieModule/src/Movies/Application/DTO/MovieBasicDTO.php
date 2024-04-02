@@ -23,9 +23,11 @@ final readonly class MovieBasicDTO
         public string $releaseYear,
         public int $duration,
         public int $ageRestriction,
-        public float $averageRating
+        public float $averageRating,
+        public string $productionCountry
     ) {
     }
+
     /**
      * Convert movie parameters to an associative array.
      *
@@ -40,6 +42,7 @@ final readonly class MovieBasicDTO
             'duration' => $this->duration,
             'ageRestriction' => $this->ageRestriction,
             'averageRating' => $this->averageRating,
+            'productionCountry' => $this->productionCountry,
         ];
     }
 }

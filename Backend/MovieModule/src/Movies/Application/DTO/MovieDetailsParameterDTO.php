@@ -11,20 +11,18 @@ final class MovieDetailsParameterDTO
     /**
      * Constructs a new MovieDetailsParameterDTO instance.
      *
-     * @param array $productionCountry An array containing production country information.
+     * @param array $productionLocations An array containing production locations information.
      * @param array $directors An array containing directors information.
      * @param array $actors An array containing actors information.
      * @param array $category An array containing category information.
-     * @param array $tags An array containing tags information.
      * @param array $languages An array containing languages information.
      * @param array $subtitles An array containing subtitles information.
      */
     public function __construct(
-        public array $productionCountry,
+        public array $productionLocations,
         public array $directors,
         public array $actors,
         public array $category,
-        public array $tags,
         public array $languages,
         public array $subtitles
     ) {
@@ -38,11 +36,10 @@ final class MovieDetailsParameterDTO
     public function toArray(): array
     {
         return [
-            'productionCountry' => $this->productionCountry,
+            'productionLocations' => $this->productionLocations,
             'directors' => $this->directors,
             'actors' => $this->actors,
             'category' => $this->category,
-            'tags' => $this->tags,
             'languages' => $this->languages,
             'subtitles' => $this->subtitles,
         ];

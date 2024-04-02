@@ -39,6 +39,7 @@ final readonly class MovieDTO
             duration: $movie->getDuration()->value(),
             ageRestriction: $movie->getAgeRestriction()->value(),
             averageRating: $movie->getAverageRating()->value(),
+            productionCountry: $movie->getProductionCountry()->value(),
         );
 
         return new self(
@@ -46,13 +47,12 @@ final readonly class MovieDTO
             movieBasic: $movieData,
 
             movieDetailsParameters: new MovieDetailsParameterDTO(
-                productionCountry: $movie->productionCountry(),
-                directors: $movie->Directors(),
-                actors: $movie->Actors(),
-                category: $movie->Category(),
-                tags: $movie->productionCountry(),
-                languages: $movie->Languages(),
-                subtitles: $movie->Subtitles(),
+                productionLocations: $movie->getProductionLocationsManager(),
+                directors: $movie->getDirectorsManager(),
+                actors: $movie->getActorsManager(),
+                category: $movie->getCategoryManager(),
+                languages: $movie->getLanguagesManager(),
+                subtitles: $movie->getSubtitlesManager(),
             )
         );
     }
