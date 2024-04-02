@@ -3,11 +3,11 @@ declare(strict_types=1);
 namespace App\Movies\Infrastructure\Doctrine\Type;
 
 use App\Common\Infrastructure\Doctrine\Type\StringType;
-use App\Movies\Domain\ValueObject\MovieProductionCountry;
+use App\Movies\Domain\ValueObject\ProductionCountry;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 /**
- * Custom Doctrine type for mapping MovieProductionCountry value objects to database columns.
+ * Custom Doctrine type for mapping ProductionCountry value objects to database columns.
  */
 class ProductionCountryType extends StringType
 {
@@ -18,10 +18,10 @@ class ProductionCountryType extends StringType
      *
      * @param mixed $value The value from the database.
      * @param AbstractPlatform $platform The database platform.
-     * @return MovieProductionCountry The PHP representation of the value.
+     * @return ProductionCountry The PHP representation of the value.
      */
-    public function convertToPHPValue($value, AbstractPlatform $platform): MovieProductionCountry
+    public function convertToPHPValue($value, AbstractPlatform $platform): ProductionCountry
     {
-        return MovieProductionCountry::fromString((string)$value);
+        return ProductionCountry::fromString((string)$value);
     }
 }
