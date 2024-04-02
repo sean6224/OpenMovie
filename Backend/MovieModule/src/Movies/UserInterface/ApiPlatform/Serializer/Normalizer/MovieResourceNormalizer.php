@@ -30,7 +30,8 @@ class MovieResourceNormalizer implements NormalizerInterface
             'releaseYear' => $movieBasic->releaseYear,
             'duration' => $movieBasic->duration,
             'ageRestriction' => $movieBasic->ageRestriction,
-            'averageRating' => (float)$movieBasic->averageRating,
+            'averageRating' => $movieBasic->averageRating,
+            'productionCountry' => $movieBasic->productionCountry,
         ];
 
         // Normalizing collection properties from movie details parameters
@@ -48,11 +49,10 @@ class MovieResourceNormalizer implements NormalizerInterface
     {
         // List of collection properties to normalize
         $propertiesToNormalize = [
-            'productionCountry',
+            'productionLocations',
             'directors',
             'actors',
             'category',
-            'tags',
             'languages',
             'subtitles',
         ];
