@@ -5,14 +5,7 @@ namespace App\Movies\Application\Service;
 use App\Movies\Domain\Repository\MovieRepository;
 use App\Movies\Domain\Entity\Movie;
 use App\Movies\Application\DTO\MovieDTO;
-
-use App\Movies\Domain\ValueObject\AverageRating;
 use App\Movies\Domain\ValueObject\MovieName;
-use App\Movies\Domain\ValueObject\Description;
-use App\Movies\Domain\ValueObject\ReleaseYear;
-use App\Movies\Domain\ValueObject\Duration;
-use App\Movies\Domain\ValueObject\AgeRestriction;
-
 use App\Movies\Domain\Exception\MovieAlreadyExists;
 
 /**
@@ -42,17 +35,10 @@ final readonly class MovieCreator
         MovieDTO $movieDto
     ): Movie
     {
-        $movieDTO = $movieDto->movieBasic;
-        $this->ensureMovieNotExist(MovieName::fromString($movieDTO->movieName));
-
+        $this->ensureMovieNotExist(MovieName::fromString($movieDto->movieBasic->movieName));
         $movie = Movie::create(
-            MovieName::fromString($movieDTO->movieName),
-            Description::fromString($movieDTO->description),
-            ReleaseYear::fromString($movieDTO->releaseYear),
+            $movieDto->movieBasic->toArray(),
             $movieDto->movieDetailsParameters->toArray(),
-            Duration::fromInt($movieDTO->duration),
-            AgeRestriction::fromInt($movieDTO->ageRestriction),
-            AverageRating::fromFloat($movieDTO->averageRating),
         );
         $this->movieRepository->add($movie);
         return $movie;
