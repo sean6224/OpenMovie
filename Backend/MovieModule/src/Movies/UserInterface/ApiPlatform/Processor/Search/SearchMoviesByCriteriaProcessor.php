@@ -6,7 +6,6 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Common\Application\Query\QueryBus;
 use App\Movies\Application\DTO\MovieDTO;
-use App\Movies\Domain\Exception\MissingOrEmptyAttributesException;
 use App\Movies\Application\UseCase\Query\Search\SearchMoviesByCriteria\SearchMoviesByCriteriaQuery;
 use App\Movies\UserInterface\ApiPlatform\Output\MovieSearchOutput;
 use App\Movies\UserInterface\ApiPlatform\Resource\MovieResource;
@@ -40,8 +39,6 @@ final readonly class SearchMoviesByCriteriaProcessor implements ProcessorInterfa
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): MovieSearchOutput
     {
-        $this->validate($data);
-
         $movies = $this->queryBus->ask(
             new SearchMoviesByCriteriaQuery(
                 filters: $data->getFilters(),
@@ -54,33 +51,6 @@ final readonly class SearchMoviesByCriteriaProcessor implements ProcessorInterfa
         $movieResources = $this->mapMovieDTOsToMovieResources($movies);
         return new MovieSearchOutput($movieResources);
     }
-
-    /**
-     * Validates the provided data to ensure required attributes are not missing or empty.
-     *
-     * @param mixed $data The data to validate.
-     * @throws MissingOrEmptyAttributesException Thrown when required attributes are missing or empty.
-     */
-    private function validate(mixed $data): void
-    {
-        $requiredAttributes = [
-            'productionCountry' => false,
-            'category' => false,
-            'languages' => false,
-            'subtitles' => false
-        ];
-
-        foreach ($requiredAttributes as $attribute => $isRequired) {
-            if (!isset($data->filters[$attribute]) || empty(array_filter($data->filters[$attribute]))) {
-                $missingAttributes[] = $attribute;
-            }
-        }
-
-        if (!empty($missingAttributes)) {
-            throw new MissingOrEmptyAttributesException($missingAttributes);
-        }
-    }
-
 
     /**
      * Maps movie DTOs to movie resources.
