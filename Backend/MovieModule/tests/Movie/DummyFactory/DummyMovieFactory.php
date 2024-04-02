@@ -4,18 +4,13 @@ namespace App\Tests\Movie\DummyFactory;
 use App\Movies\Application\DTO\MovieBasicDTO;
 use App\Movies\Application\DTO\MovieDetailsParameterDTO;
 use App\Movies\Domain\Entity\Movie;
-use App\Movies\Domain\ValueObject\AgeRestriction;
-use App\Movies\Domain\ValueObject\AverageRating;
-use App\Movies\Domain\ValueObject\Description;
-use App\Movies\Domain\ValueObject\Duration;
-use App\Movies\Domain\ValueObject\MovieName;
-use App\Movies\Domain\ValueObject\ReleaseYear;
 use Faker\Factory;
 use Faker\Generator;
 
 class DummyMovieFactory
 {
     private function __construct() {
+        //Empty __construct
     }
 
     public static function createMovie(): Movie
@@ -25,13 +20,8 @@ class DummyMovieFactory
         $movieDetailsParameters = self::generateMovieDetailsParamData($faker);
 
         return Movie::create(
-            MovieName::fromString($movieBasicData->movieName),
-            Description::fromString($movieBasicData->description),
-            ReleaseYear::fromString($movieBasicData->releaseYear),
+            $movieBasicData->toArray(),
             $movieDetailsParameters->toArray(),
-            Duration::fromInt($movieBasicData->duration),
-            AgeRestriction::fromInt($movieBasicData->ageRestriction),
-            AverageRating::fromFloat($movieBasicData->averageRating),
         );
     }
 
@@ -49,7 +39,8 @@ class DummyMovieFactory
             releaseYear: $faker->year(),
             duration: $faker->numberBetween(0, 90),
             ageRestriction: $faker->numberBetween(0, 1500),
-            averageRating: $faker->randomFloat(1, 1, 10)
+            averageRating: $faker->randomFloat(1, 1, 10),
+            productionCountry: $faker->country()
         );
     }
 
@@ -62,11 +53,10 @@ class DummyMovieFactory
     public static function generateMovieDetailsParamData(Generator $faker): MovieDetailsParameterDTO
     {
         return new MovieDetailsParameterDTO(
-            productionCountry: [$faker->country()],
+            productionLocations: [$faker->country()],
             directors: [$faker->name()],
             actors: [$faker->name()],
             category: [$faker->randomElement(['Action', 'Comedy', 'Drama', 'Thriller'])],
-            tags: [$faker->randomElement(['Adventure', 'Romance', 'Sci-Fi', 'Horror'])],
             languages: [$faker->languageCode()],
             subtitles: [$faker->randomElement(['English', 'Spanish', 'French', 'German'])]
         );
