@@ -40,13 +40,8 @@ class CreateMovieTest extends KernelTestCase
 
         $commandBus->dispatch(
             new CreateMovieCommand(
-                movieName: $movieData->movieName,
-                description: $movieData->description,
-                releaseYear: $movieData->releaseYear,
-                movieData: $movieDetailsParameters,
-                duration: $movieData->duration,
-                ageRestriction: $movieData->ageRestriction,
-                averageRating: $movieData->averageRating
+                movieBasicDTO: $movieData,
+                movieDetailsDTO: $movieDetailsParameters,
             )
         );
 
