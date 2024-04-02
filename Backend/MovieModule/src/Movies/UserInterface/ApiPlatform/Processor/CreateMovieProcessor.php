@@ -37,19 +37,11 @@ final readonly class CreateMovieProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): MovieResource
     {
-        /**
-         * Get the basic movie data
-         */
-        $movieBasic = $data->movieBasic;
         $movieDTO = new CreateMovieCommand(
-            movieName: $movieBasic->movieName,
-            description: $movieBasic->description,
-            releaseYear: $movieBasic->releaseYear,
-            movieData: $data->movieDetailsParameters,
-            duration: $movieBasic->duration,
-            ageRestriction: $movieBasic->ageRestriction,
-            averageRating: $movieBasic->averageRating
+            movieBasicDTO: $data->movieBasic,
+            movieDetailsDTO: $data->movieDetailsParameters,
         );
+
         return MovieResource::fromMovieDTO(
             $this->commandBus->dispatch($movieDTO)
         );
