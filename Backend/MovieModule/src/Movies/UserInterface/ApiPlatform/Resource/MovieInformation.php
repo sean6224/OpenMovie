@@ -34,10 +34,16 @@ class MovieInformation
     public ?string $releaseYear = null;
 
     /**
-     * @var array The production countries of the movie.
+     * @var string|null The production countries of the movie.
      * @Groups({"read", "create"})
      */
-    public array $productionCountry = [];
+    public ?string $productionCountry = null;
+
+    /**
+     * @var array The production locations of the movie.
+     * @Groups({"read", "create"})
+     */
+    public array $productionLocations = [];
 
     /**
      * @var array The directors of the movie.
@@ -56,12 +62,6 @@ class MovieInformation
      * @Groups({"read", "create"})
      */
     public array $category = [];
-
-    /**
-     * @var array The tags associated with the movie.
-     * @Groups({"read", "create"})
-     */
-    public array $tags = [];
 
     /**
      * @var array The languages spoken in the movie.
