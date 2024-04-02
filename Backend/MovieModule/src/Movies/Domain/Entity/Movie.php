@@ -52,9 +52,23 @@ class Movie extends AggregateRoot
         $this->id = Id::generate();
         $this->initialize($movieBasic);
         $this->createdAt = DateTime::now();
+
+        $this->productionLocationsManager = new ArrayCollection();
+        $this->directorsManager = new ArrayCollection();
+        $this->actorsManager = new ArrayCollection();
+        $this->categoryManager = new ArrayCollection();
+        $this->languageManager = new ArrayCollection();
+        $this->subtitlesManager = new ArrayCollection();
         $this->initializeCollection($movieDetails);
     }
 
+    /**
+     * Creates new Movie instance.
+     *
+     * @param array $movieBasic The basic movie information.
+     * @param array $movieDetails The detailed movie information.
+     * @return self
+     */
     public static function create(
         array $movieBasic,
         array $movieDetails,
@@ -65,6 +79,43 @@ class Movie extends AggregateRoot
         );
     }
 
+    /**
+     * Updates movie entity with provided data.
+     *
+     * @param MovieName|null $movieName The movie name, or null to keep existing one.
+     * @param Description|null $description The movie description, or null to keep existing one.
+     * @param ReleaseYear|null $releaseYear The release year, or null to keep existing one.
+     * @param array|null $movieDetails The movie details, or null to keep existing ones.
+     * @param Duration|null $duration The movie duration, or null to keep existing one.
+     * @param AgeRestriction|null $ageRestriction The age restriction, or null to keep existing one.
+     * @return void
+     */
+    public function update(
+        ?MovieName $movieName = null,
+        ?Description $description = null,
+        ?ReleaseYear $releaseYear = null,
+        ?array $movieDetails = null,
+        ?Duration $duration = null,
+        ?AgeRestriction $ageRestriction = null
+    ): void
+    {
+        $this->movieName = $movieName ?? $this->movieName;
+        $this->description = $description ?? $this->description;
+        $this->releaseYear = $releaseYear ?? $this->releaseYear;
+        $this->duration = $duration ?? $this->duration;
+        $this->ageRestriction = $ageRestriction ?? $this->ageRestriction;
+
+        if ($movieDetails !== null) {
+            $this->initializeCollection($movieDetails);
+        }
+    }
+
+    /**
+     * Initializes basic movie information.
+     *
+     * @param array $movieBasic The basic movie information.
+     * @return void
+     */
     private function initialize(array $movieBasic): void
     {
         $this->movieName = MovieName::fromString($movieBasic['movieName']);
@@ -76,15 +127,14 @@ class Movie extends AggregateRoot
         $this->productionCountry = ProductionCountry::fromString($movieBasic['productionCountry']);
     }
 
+    /**
+     * Initializes collections for movie details.
+     *
+     * @param array $movieDetails The movie details to initialize collections from.
+     * @return void
+     */
     private function initializeCollection(array $movieDetails): void
     {
-        $this->productionLocationsManager = new ArrayCollection();
-        $this->directorsManager = new ArrayCollection();
-        $this->actorsManager = new ArrayCollection();
-        $this->categoryManager = new ArrayCollection();
-        $this->languageManager = new ArrayCollection();
-        $this->subtitlesManager = new ArrayCollection();
-
         $collectionMappings = [
             'productionLocations' => ProductionLocationManager::class,
             'directors' => DirectorsManager::class,
@@ -95,18 +145,13 @@ class Movie extends AggregateRoot
         ];
 
         foreach ($collectionMappings as $detailKey => $managerClass) {
-            $this->{$detailKey . 'Manager'} = $this->createCollection($movieDetails[$detailKey] ?? [], $managerClass);
+            $collection = new ArrayCollection();
+            foreach ($movieDetails[$detailKey] ?? [] as $item) {
+                $manager = call_user_func([$managerClass, 'create'], $item, $this);
+                $collection->add($manager);
+            }
+            $this->{$detailKey . 'Manager'} = $collection;
         }
-    }
-
-    private function createCollection(array $items, string $managerClass): Collection
-    {
-        $collection = new ArrayCollection();
-        foreach ($items as $item) {
-            $manager = call_user_func([$managerClass, 'create'], $item, $this);
-            $collection->add($manager);
-        }
-        return $collection;
     }
 
     /**
