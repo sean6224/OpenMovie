@@ -13,53 +13,45 @@ use App\Movies\Application\DTO\MovieDTO;
 final class CreateMovieCommand implements Command
 {
     /**
-     * Constructs a new CreateMovieCommand instance.
+     * Constructs new CreateMovieCommand instance.
      *
-     * @param string $movieName The name of the movie.
-     * @param string $description The description of the movie.
-     * @param string $releaseYear The release year of the movie.
-     * @param MovieDetailsParameterDTO $movieData The details parameters of the movie.
-     * @param int $duration The duration of the movie.
-     * @param int $ageRestriction The age restriction of the movie.
-     * @param float $averageRating The average rating of the movie.
+     * @param MovieBasicDTO $movieBasicDTO The parameters of movie.
+     * @param MovieDetailsParameterDTO $movieDetailsDTO The details parameters of movie.
      */
     public function __construct(
-        public string $movieName,
-        public string $description,
-        public string $releaseYear,
-        public MovieDetailsParameterDTO $movieData,
-        public int $duration,
-        public int $ageRestriction,
-        public float $averageRating
+        public MovieBasicDTO            $movieBasicDTO,
+        public MovieDetailsParameterDTO $movieDetailsDTO,
     ) {
     }
 
     /**
-     * Converts the current object to a MovieDTO object.
+     * Converts current object to MovieDTO object.
      *
-     * @return MovieDTO Returns a new instance of MovieDTO.
+     * @return MovieDTO Returns new instance of MovieDTO.
      */
     public function toDto(): MovieDTO
     {
+        $movieBasicDTO = $this->movieBasicDTO;
+        $movieDetailsDTO = $this->movieDetailsDTO;
         return new MovieDTO(
             id: '',
             movieBasic: new MovieBasicDTO(
-                movieName: $this->movieName,
-                description: $this->description,
-                releaseYear: $this->releaseYear,
-                duration: $this->duration,
-                ageRestriction: $this->ageRestriction,
-                averageRating: $this->averageRating
+                movieName: $movieBasicDTO->movieName,
+                description: $movieBasicDTO->description,
+                releaseYear: $movieBasicDTO->releaseYear,
+                duration: $movieBasicDTO->duration,
+                ageRestriction: $movieBasicDTO->ageRestriction,
+                averageRating: $movieBasicDTO->averageRating,
+                productionCountry: $movieBasicDTO->productionCountry,
             ),
 
             movieDetailsParameters: new MovieDetailsParameterDTO(
-                productionCountry: $this->movieData->productionCountry,
-                directors: $this->movieData->directors,
-                actors: $this->movieData->actors,
-                category: $this->movieData->category,
-                tags: $this->movieData->tags,
-                languages: $this->movieData->languages,
-                subtitles: $this->movieData->subtitles,
+                productionLocations: $movieDetailsDTO->productionLocations,
+                directors: $movieDetailsDTO->directors,
+                actors: $movieDetailsDTO->actors,
+                category: $movieDetailsDTO->category,
+                languages: $movieDetailsDTO->languages,
+                subtitles: $movieDetailsDTO->subtitles,
             )
         );
     }
