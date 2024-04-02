@@ -42,13 +42,13 @@ class CreateMovieResourceNormalizer implements DenormalizerInterface
         $movieInformation->duration = $movieInformationData['duration'] ?? 0;
         $movieInformation->ageRestriction = $movieInformationData['ageRestriction'] ?? 0;
         $movieInformation->averageRating = $movieInformationData['averageRating'] ?? 0.0;
+        $movieInformation->productionCountry = $movieInformationData['productionCountry'] ?? '';
 
         $movieDetailsParameters = new MovieDetailsParameterDTO(
-            productionCountry: $movieInformationData['productionCountry'] ?? [],
+            productionLocations: $movieInformationData['productionLocations'] ?? [],
             directors: $movieInformationData['directors'] ?? [],
             actors: $movieInformationData['actors'] ?? [],
             category: $movieInformationData['category'] ?? [],
-            tags: $movieInformationData['tags'] ?? [],
             languages: $movieInformationData['languages'] ?? [],
             subtitles: $movieInformationData['subtitles'] ?? []
         );
@@ -60,7 +60,8 @@ class CreateMovieResourceNormalizer implements DenormalizerInterface
                 releaseYear: $movieInformation->releaseYear,
                 duration: $movieInformation->duration,
                 ageRestriction: $movieInformation->ageRestriction,
-                averageRating: $movieInformation->averageRating
+                averageRating: $movieInformation->averageRating,
+                productionCountry: $movieInformation->productionCountry
             ),
             movieDetailsParameters: $movieDetailsParameters
         );
