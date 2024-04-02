@@ -5,7 +5,7 @@ namespace App\Movies\Domain\Entity;
 use App\Common\Domain\ValueObject\Id;
 use App\Movies\Domain\ValueObject\MovieDirectors;
 
-class Directors
+class DirectorsManager
 {
     private Id $id;
     private MovieDirectors $movieDirectors;

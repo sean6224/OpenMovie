@@ -3,26 +3,26 @@ declare(strict_types=1);
 namespace App\Movies\Domain\Entity;
 
 use App\Common\Domain\ValueObject\Id;
-use App\Movies\Domain\ValueObject\MovieActors;
+use App\Movies\Domain\ValueObject\MovieCategory;
 
-class Actors
+class CategoryManager
 {
     private Id $id;
-    private MovieActors $movieActor;
+    private MovieCategory $movieCategory;
 
     private function __construct(
-        string $actor,
+        string $category,
         private readonly Movie $movie,
     ) {
         $this->id = Id::generate();
-        $this->movieActor = MovieActors::fromString($actor);
+        $this->movieCategory = MovieCategory::fromString($category);
     }
 
     public static function create(
-        string $actor,
+        string $category,
         Movie $movie,
     ): self {
-        return new self($actor, $movie);
+        return new self($category, $movie);
     }
 
     /**
@@ -34,11 +34,11 @@ class Actors
     }
 
     /**
-     * @return MovieActors
+     * @return MovieCategory
      */
-    public function getActors(): MovieActors
+    public function getCategory(): MovieCategory
     {
-        return $this->movieActor;
+        return $this->movieCategory;
     }
 
     public function movie(): Movie
@@ -48,6 +48,6 @@ class Actors
 
     public function __toString(): string
     {
-        return $this->movieActor->__toString();
+        return $this->movieCategory->__toString();
     }
 }

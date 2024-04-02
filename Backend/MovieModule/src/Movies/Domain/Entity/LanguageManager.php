@@ -3,26 +3,26 @@ declare(strict_types=1);
 namespace App\Movies\Domain\Entity;
 
 use App\Common\Domain\ValueObject\Id;
-use App\Movies\Domain\ValueObject\MovieSubtitles;
+use App\Movies\Domain\ValueObject\MovieLanguage;
 
-class Subtitles
+class LanguageManager
 {
     private Id $id;
-    private MovieSubtitles $movieSubtitles;
+    private MovieLanguage $movieLanguage;
 
     private function __construct(
-        string $subtitles,
+        string $language,
         private readonly Movie $movie,
     ) {
         $this->id = Id::generate();
-        $this->movieSubtitles = MovieSubtitles::fromString($subtitles);
+        $this->movieLanguage = MovieLanguage::fromString($language);
     }
 
     public static function create(
-        string $subtitles,
+        string $language,
         Movie $movie,
     ): self {
-        return new self($subtitles, $movie);
+        return new self($language, $movie);
     }
 
     /**
@@ -34,11 +34,11 @@ class Subtitles
     }
 
     /**
-     * @return MovieSubtitles
+     * @return MovieLanguage
      */
-    public function getLanguage(): MovieSubtitles
+    public function getLanguage(): MovieLanguage
     {
-        return $this->movieSubtitles;
+        return $this->movieLanguage;
     }
 
     public function movie(): Movie
@@ -48,6 +48,6 @@ class Subtitles
 
     public function __toString(): string
     {
-        return $this->movieSubtitles->__toString();
+        return $this->movieLanguage->__toString();
     }
 }
