@@ -101,14 +101,14 @@ class MovieResource
             duration: $movieBasic->duration,
             ageRestriction: $movieBasic->ageRestriction,
             averageRating: $movieBasic->averageRating,
+            productionCountry: $movieBasic->productionCountry
         );
 
         $movieDetails = new MovieDetailsParameterDTO(
-            productionCountry: $movieDetailsParameters->productionCountry,
+            productionLocations: $movieDetailsParameters->productionLocations,
             directors: $movieDetailsParameters->directors,
             actors: $movieDetailsParameters->actors,
             category: $movieDetailsParameters->category,
-            tags: $movieDetailsParameters->tags,
             languages: $movieDetailsParameters->languages,
             subtitles: $movieDetailsParameters->subtitles,
         );
