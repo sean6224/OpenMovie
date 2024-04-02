@@ -12,14 +12,11 @@ use App\Movies\Application\DTO\MovieDTO;
  */
 class UpdateMovieCommand implements Command
 {
+
     public function __construct(
         public string $movieId,
-        public string $movieName,
-        public string $description,
-        public string $releaseYear,
-        public MovieDetailsParameterDTO $movieData,
-        public int $duration,
-        public int $ageRestriction
+        public MovieBasicDTO            $movieBasicDTO,
+        public MovieDetailsParameterDTO $movieDetailsDTO
     ) {
     }
 
@@ -30,24 +27,27 @@ class UpdateMovieCommand implements Command
      */
     public function toDto(): MovieDTO
     {
+        $movieBasicDTO = $this->movieBasicDTO;
+        $movieDetailsDTO = $this->movieDetailsDTO;
         return new MovieDTO(
             id: $this->movieId,
             movieBasic: new MovieBasicDTO(
-                movieName: $this->movieName,
-                description: $this->description,
-                releaseYear: $this->releaseYear,
-                duration: $this->duration,
-                ageRestriction: $this->ageRestriction
+                movieName: $movieBasicDTO->movieName,
+                description: $movieBasicDTO->description,
+                releaseYear: $movieBasicDTO->releaseYear,
+                duration: $movieBasicDTO->duration,
+                ageRestriction: $movieBasicDTO->ageRestriction,
+                averageRating: $movieBasicDTO->averageRating,
+                productionCountry: $movieBasicDTO->productionCountry,
             ),
 
             movieDetailsParameters: new MovieDetailsParameterDTO(
-                productionCountry: $this->movieData->productionCountry,
-                directors: $this->movieData->directors,
-                actors: $this->movieData->actors,
-                category: $this->movieData->category,
-                tags: $this->movieData->tags,
-                languages: $this->movieData->languages,
-                subtitles: $this->movieData->subtitles,
+                productionLocations: $movieDetailsDTO->productionLocations,
+                directors: $movieDetailsDTO->directors,
+                actors: $movieDetailsDTO->actors,
+                category: $movieDetailsDTO->category,
+                languages: $movieDetailsDTO->languages,
+                subtitles: $movieDetailsDTO->subtitles,
             )
         );
     }
