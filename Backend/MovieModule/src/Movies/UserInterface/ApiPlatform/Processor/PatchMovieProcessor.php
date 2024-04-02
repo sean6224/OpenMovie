@@ -37,17 +37,10 @@ final readonly class PatchMovieProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): MovieResource
     {
-        $movieBasic = $data->movieBasic;
-        $movieId = $uriVariables['id'];
-
         $movieDTO = new UpdateMovieCommand(
-            movieId: $movieId,
-            movieName: $movieBasic->movieName,
-            description: $movieBasic->description,
-            releaseYear: $movieBasic->releaseYear,
-            movieData: $data->movieDetailsParameters,
-            duration: $movieBasic->duration,
-            ageRestriction: $movieBasic->ageRestriction
+            movieId: $uriVariables['id'],
+            movieBasicDTO: $data->movieBasic,
+            movieDetailsDTO: $data->movieDetailsParameters,
         );
         $updatedMovie = $this->commandBus->dispatch($movieDTO);
         return MovieResource::fromMovieDTO($updatedMovie);
