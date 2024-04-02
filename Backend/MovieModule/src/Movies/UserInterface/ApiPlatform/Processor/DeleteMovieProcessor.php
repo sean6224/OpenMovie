@@ -33,9 +33,8 @@ final readonly class DeleteMovieProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): void
     {
-        $movieId = (string)$uriVariables['id'];
         $this->commandBus->dispatch(
-            new DeleteMovieCommand(movieId: $movieId)
+            new DeleteMovieCommand(movieId: $uriVariables['id'])
         );
     }
 }
