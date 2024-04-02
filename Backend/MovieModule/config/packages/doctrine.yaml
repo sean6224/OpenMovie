@@ -24,6 +24,7 @@ doctrine:
             ageRestriction: App\Movies\Infrastructure\Doctrine\Type\AgeRestrictionType
             averageRating: App\Movies\Infrastructure\Doctrine\Type\AverageRatingType
             productionCountry: App\Movies\Infrastructure\Doctrine\Type\ProductionCountryType
+            productionLocation: App\Movies\Infrastructure\Doctrine\Type\ProductionLocationType
             movieDirectors: App\Movies\Infrastructure\Doctrine\Type\DirectorType
             actor: App\Movies\Infrastructure\Doctrine\Type\ActorType
             category: App\Movies\Infrastructure\Doctrine\Type\CategoryType
@@ -44,6 +45,7 @@ doctrine:
                 type: xml
                 dir: '%kernel.project_dir%/src/Movies/Infrastructure/Doctrine/Mapping'
                 prefix: 'App\Movies\Domain\Entity'
+                
             Ratings:
                 is_bundle: false
                 type: xml
