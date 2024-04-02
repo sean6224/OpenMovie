@@ -3,11 +3,10 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="App\Movies\Domain\Entity\Subtitles" table="movie_subtitles">
+    <entity name="App\Movies\Domain\Entity\ProductionLocationManager" table="Location">
         <id name="id" type="id" column="id"/>
-        <field name="movieSubtitles" type="subtitles" column="subtitles" />
-
-        <many-to-one field="movie" target-entity="App\Movies\Domain\Entity\Movie" inversed-by="subtitles">
+        <field name="productionLocation" type="productionLocation"  column="productionLocation" />
+        <many-to-one field="movie" target-entity="App\Movies\Domain\Entity\Movie" inversed-by="productionLocationsManager">
             <join-column nullable="false" name="movie_id"/>
         </many-to-one>
     </entity>

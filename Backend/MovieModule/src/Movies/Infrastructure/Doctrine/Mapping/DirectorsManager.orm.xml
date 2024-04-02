@@ -3,12 +3,11 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="App\Movies\Domain\Entity\Language" table="movie_language">
+    <entity name="App\Movies\Domain\Entity\DirectorsManager" table="Directors">
         <id name="id" type="id" column="id"/>
-        <field name="movieLanguage" type="language" column="language" />
-
-        <many-to-one field="movie" target-entity="App\Movies\Domain\Entity\Movie" inversed-by="language">
-            <join-column nullable="false" name="movie_id"/>
+        <field name="movieDirectors" type="movieDirectors"  column="directors" />
+        <many-to-one field="movie" target-entity="App\Movies\Domain\Entity\Movie" inversed-by="director">
+            <join-column nullable="false" name="movie_id" referenced-column-name="id"/>
         </many-to-one>
     </entity>
 </doctrine-mapping>

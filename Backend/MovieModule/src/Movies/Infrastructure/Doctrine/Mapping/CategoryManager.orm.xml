@@ -3,11 +3,12 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="App\Movies\Domain\Entity\ProductionCountry" table="production_countries">
+    <entity name="App\Movies\Domain\Entity\CategoryManager" table="Category">
         <id name="id" type="id" column="id"/>
-        <field name="productionCountry" type="productionCountry"  column="production_country" />
-        <many-to-one field="movie" target-entity="App\Movies\Domain\Entity\Movie" inversed-by="productionCountry">
-            <join-column nullable="false" name="movie_id" referenced-column-name="id"/>
+        <field name="movieCategory" type="category" column="category" />
+
+        <many-to-one field="movie" target-entity="App\Movies\Domain\Entity\Movie" inversed-by="category">
+            <join-column nullable="false" name="movie_id"/>
         </many-to-one>
     </entity>
 </doctrine-mapping>

@@ -11,6 +11,7 @@
         <field name="duration" type="duration" column="duration"/>
         <field name="ageRestriction" type="ageRestriction" column="ageRestriction"/>
         <field name="averageRating" type="averageRating" column="averageRating"/>
+        <field name="productionCountry" type="productionCountry" column="productionCountry"/>
         <field name="createdAt" type="datetime" column="created_at"/>
 
         <!-- Indexes -->
@@ -18,37 +19,37 @@
             <index name="movies_created_at_idx" columns="created_at"/>
         </indexes>
 
-        <one-to-many field="productionCountries" target-entity="App\Movies\Domain\Entity\ProductionCountry" mapped-by="movie">
+        <one-to-many field="productionLocationsManager" target-entity="App\Movies\Domain\Entity\ProductionLocationManager" mapped-by="movie">
             <cascade>
                 <cascade-all/>
             </cascade>
         </one-to-many>
 
-        <one-to-many field="directors" target-entity="App\Movies\Domain\Entity\Directors" mapped-by="movie">
+        <one-to-many field="directorsManager" target-entity="App\Movies\Domain\Entity\DirectorsManager" mapped-by="movie">
             <cascade>
                 <cascade-all/>
             </cascade>
         </one-to-many>
 
-        <one-to-many field="actors" target-entity="App\Movies\Domain\Entity\Actors" mapped-by="movie">
+        <one-to-many field="actorsManager" target-entity="App\Movies\Domain\Entity\ActorsManager" mapped-by="movie">
             <cascade>
                 <cascade-all/>
             </cascade>
         </one-to-many>
 
-        <one-to-many field="category" target-entity="App\Movies\Domain\Entity\Category" mapped-by="movie">
+        <one-to-many field="categoryManager" target-entity="App\Movies\Domain\Entity\CategoryManager" mapped-by="movie">
             <cascade>
                 <cascade-all/>
             </cascade>
         </one-to-many>
 
-        <one-to-many field="language" target-entity="App\Movies\Domain\Entity\Language" mapped-by="movie">
+        <one-to-many field="languageManager" target-entity="App\Movies\Domain\Entity\LanguageManager" mapped-by="movie">
             <cascade>
                 <cascade-all/>
             </cascade>
         </one-to-many>
 
-        <one-to-many field="subtitles" target-entity="App\Movies\Domain\Entity\Subtitles" mapped-by="movie">
+        <one-to-many field="subtitlesManager" target-entity="App\Movies\Domain\Entity\SubtitlesManager" mapped-by="movie">
             <cascade>
                 <cascade-all/>
             </cascade>
