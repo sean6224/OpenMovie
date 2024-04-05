@@ -2,9 +2,13 @@
 declare(strict_types=1);
 namespace App\Common\Infrastructure\Adapter\Filesystem;
 
+use App\Common\Domain\Port\FilesystemPort;
 use FTP\Connection;
 
-class FtpAdapter
+/**
+ * Adapter for interacting with FTP filesystem.
+ */
+class FtpAdapter implements FilesystemPort
 {
     private string $host;
     private string $username;
@@ -169,6 +173,36 @@ class FtpAdapter
         }
 
         return $fileInfo[0] ?? false;
+    }
+
+    /**
+     * Checks if file exists on FTP server.
+     *
+     * @param string $remoteFilePath The remote path of file.
+     * @return bool True if the file exists, false otherwise.
+     */
+    public function fileExists(string $remoteFilePath): bool
+    {
+        if (!$this->connection) {
+            return false;
+        }
+
+        $contents = ftp_nlist($this->connection, $remoteFilePath);
+        return $contents !== false;
+    }
+
+    /**
+     * Retrieves URL of file on FTP server.
+     *
+     * @param string $remoteFilePath The remote path of file.
+     * @return string|null The URL of the file, or null if it doesn't exist.
+     */
+    public function getFileUrl(string $remoteFilePath): ?string
+    {
+        if ($this->fileExists($remoteFilePath)) {
+            return 'ftp://' . $this->host . '/' . $remoteFilePath;
+        }
+        return null;
     }
 
     /**
