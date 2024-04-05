@@ -2,10 +2,14 @@
 declare(strict_types=1);
 namespace App\Common\Infrastructure\Adapter\Filesystem;
 
+use App\Common\Domain\Port\FilesystemPort;
 use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
 
-class S3Adapter
+/**
+ * Adapter for interacting with Amazon S3 filesystem.
+ */
+class S3Adapter implements FilesystemPort
 {
     private S3Client $s3Client;
     private string $bucketName;
