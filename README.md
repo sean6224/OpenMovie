@@ -1,8 +1,9 @@
 # OpenMovie 🎥 - v0.1.0 Sphinx
-> [!NOTE] The project wiil be restarted soon and will be overwritten again! <3
+> [!NOTE]
+> :warning: OpenMovie is an open source movie and series streaming platform.
 
 > [!IMPORTANT]
-> :warning: OpenMovie is an open source movie and series streaming platform.
+> :warning: The project wiil be restarted soon and will be overwritten again! <3
 
 **Discussion of project:**
 > OpenMovie was designed with ease of use and performance in mind. Our goal is to create a streaming platform that is competitive with commercial services but remains open and accessible to the community.
